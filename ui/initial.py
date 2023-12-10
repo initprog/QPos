@@ -3,7 +3,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 
 
-class Ui_Form():
+class Ui_Form:
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(1500, 900)

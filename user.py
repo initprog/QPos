@@ -1,15 +1,10 @@
-import sys
-import sqlite3
-from PyQt6.QtCore import QModelIndex, pyqtSlot, QObject
 from PyQt6.QtWidgets import *
-from PyQt6 import QtWidgets, QtCore
-#from PyQt6.uic.properties import QtGui
-from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6 import QtWidgets
+from PyQt6 import QtGui, QtWidgets
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 
-from ui import initial, orderMain, refund, cardPayment, cashPayment, choosePayment
-import admin
+from ui import initial, orderMain
 
 class UserAuth(initial.Ui_Form):
     def __init__(self):
