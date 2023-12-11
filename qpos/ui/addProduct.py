@@ -1,5 +1,7 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 import sqlite3
+from contextlib import closing
+from qpos.db import conn
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QIntValidator
 from PyQt6.QtWidgets import *
@@ -227,11 +229,11 @@ class AddProduct(QMainWindow, Ui_Form):
         model.clear()
         sql = "SELECT * FROM Product WHERE Category='Chicken'"
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
             self.showProductBox.setModel(model)
@@ -244,11 +246,11 @@ class AddProduct(QMainWindow, Ui_Form):
         model.clear()
         sql = "SELECT * FROM Product WHERE Category='Beverage'"
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
             self.showProductBox.setModel(model)
@@ -261,11 +263,11 @@ class AddProduct(QMainWindow, Ui_Form):
         model.clear()
         sql = "SELECT * FROM Product WHERE Category='Etc'"
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
             self.showProductBox.setModel(model)
@@ -282,11 +284,11 @@ class AddProduct(QMainWindow, Ui_Form):
             return
         sql = "INSERT INTO Product(Name, Price, Category) VALUES ('%s','%d','%s')" % (name, price, category)
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            conn.commit()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    connection.commit()
+
         except sqlite3.Error as e:
             print("An error occurred:", e.args[0])
             warning = QMessageBox()
@@ -325,11 +327,11 @@ class AddProduct(QMainWindow, Ui_Form):
             return False
         sql = "SELECT * FROM Product WHERE Name='%s'" % name
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            nameCheck = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    nameCheck = cursor.fetchall()
+
             if nameCheck != []:
                 warning = QMessageBox()
                 warning.setIcon(QMessageBox.Warning)

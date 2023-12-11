@@ -1,4 +1,6 @@
 import sqlite3
+from contextlib import closing
+from qpos.db import conn
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
@@ -211,11 +213,11 @@ class OrderMain(QMainWindow, Ui_Form):
         model.clear()
         sql = "SELECT * FROM Product WHERE Category='Chicken'"
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
             self.productList.setModel(model)
@@ -228,11 +230,11 @@ class OrderMain(QMainWindow, Ui_Form):
         model.clear()
         sql = "SELECT * FROM Product WHERE Category='Beverage'"
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
             self.productList.setModel(model)
@@ -245,11 +247,11 @@ class OrderMain(QMainWindow, Ui_Form):
         model.clear()
         sql = "SELECT * FROM Product WHERE Category='Etc'"
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
             self.productList.setModel(model)
@@ -299,11 +301,10 @@ class OrderMain(QMainWindow, Ui_Form):
         productName = index.data()
         sql = "SELECT Price FROM Product WHERE Name='%s'" % productName
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
 
             price = int(data[0][0])
             if productName in orderedItems:

@@ -1,4 +1,6 @@
 import sqlite3
+from contextlib import closing
+from qpos.db import conn
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtGui import QIntValidator
 from PyQt6.QtWidgets import *
@@ -234,11 +236,11 @@ class ChangePrice(QMainWindow, Ui_Form):
         model.clear()
         sql = "SELECT * FROM Product WHERE Category='Chicken'"
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
             self.showProductBox.setModel(model)
@@ -251,11 +253,11 @@ class ChangePrice(QMainWindow, Ui_Form):
         model.clear()
         sql = "SELECT * FROM Product WHERE Category='Beverage'"
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
             self.showProductBox.setModel(model)
@@ -268,11 +270,11 @@ class ChangePrice(QMainWindow, Ui_Form):
         model.clear()
         sql = "SELECT * FROM Product WHERE Category='Etc'"
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
             self.showProductBox.setModel(model)
@@ -283,14 +285,13 @@ class ChangePrice(QMainWindow, Ui_Form):
     def passProductName(self, index):
         self.productNameBox.setText(index.data())
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            sql = "SELECT * FROM Product WHERE Name='%s'" % index.data()
-            c.execute(sql)
-            data = c.fetchone()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute("SELECT * FROM Product WHERE Name='%s'" % index.data())
+                    data = cursor.fetchone()
             price = str(data[2])
             self.originalPriceBox.setText(price)
-            conn.close()
+
         except sqlite3.Error as e:
             print(e)
 
@@ -312,11 +313,11 @@ class ChangePrice(QMainWindow, Ui_Form):
             return False
         sql = "SELECT * FROM Product WHERE Name='%s'" % productName
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            nameCheck = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    nameCheck = cursor.fetchall()
+
             if nameCheck == []:
                 warning = QMessageBox()
                 warning.setIcon(QMessageBox.Warning)
@@ -338,11 +339,11 @@ class ChangePrice(QMainWindow, Ui_Form):
             return
         sql = "UPDATE Product SET Price='%d' WHERE Name='%s'" % (newPrice, productName)
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            conn.commit()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    connection.commit()
+
         except sqlite3.Error as e:
             print("An error occurred:", e.args[0])
             warning = QMessageBox()

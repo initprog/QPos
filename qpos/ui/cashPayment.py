@@ -1,6 +1,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
+from contextlib import closing
+from qpos.db import conn
 from qpos.ui import orderMain, choosePayment
 from qpos.ui.orderMain import *
 import datetime
@@ -11,12 +13,12 @@ from qpos import user
 cashReceived = ''
 sql = "SELECT Total FROM Management WHERE ID = (SELECT MAX(ID) FROM Management)"
 try:
-    conn = sqlite3.connect("pos.sqlite")
-    c = conn.cursor()
-    c.execute(sql)
-    data = c.fetchall()
+    with closing(conn()) as connection:
+        with closing(connection.cursor()) as cursor:
+            cursor.execute(sql)
+            data = cursor.fetchall()
+
     currentCash = data[0][0]
-    conn.close()
 except sqlite3.Error as e:
     print("An error occurred:", e.args[0])
 
@@ -350,12 +352,12 @@ class CashPayment(QMainWindow, Ui_Form):
                    (NoSale, Date, Time, int(cashReceived), Payment)
             sql3 = "INSERT INTO MANAGEMENT (DateTime, Total) VALUES ('%s', %s)" % (DateTime, currentCash)
             try:
-                conn = sqlite3.connect("pos.sqlite")
-                c = conn.cursor()
-                c.execute(sql1)
-                c.execute(sql3)
-                conn.commit()
-                conn.close()
+                with closing(conn()) as connection:
+                    with closing(connection.cursor()) as cursor:
+                        cursor.execute(sql1)
+                        cursor.execute(sql3)
+                        connection.commit()
+
             except sqlite3.Error as e:
                 print("An error occurred:", e.args[0])
                 warning = QMessageBox()
@@ -379,17 +381,17 @@ class CashPayment(QMainWindow, Ui_Form):
                    (NoSale, Date, Time, orderMain.totalPrice, Payment)
             sql3 = "INSERT INTO MANAGEMENT (DateTime, Total) VALUES ('%s', %s)"%(DateTime, currentCash)
             try:
-                conn = sqlite3.connect("pos.sqlite")
-                c = conn.cursor()
-                c.execute(sql1)
-                for i in orderMain.orderedItems:
-                    sql2 = "INSERT INTO DetailedSale (NoSale, Product, No, Price) VALUES (%s, '%s', %s, %s)" %\
-                           (NoSale, i, int(orderMain.orderModel.index(int(orderMain.orderedItems.index(i)), 2).data()),\
-                            int(orderMain.orderModel.index(int(orderMain.orderedItems.index(i)), 3).data().replace(',','')))
-                    c.execute(sql2)
-                c.execute(sql3)
-                conn.commit()
-                conn.close()
+                with closing(conn()) as connection:
+                    with closing(connection.cursor()) as cursor:
+                        cursor.execute(sql1)
+                        for i in orderMain.orderedItems:
+                            sql2 = "INSERT INTO DetailedSale (NoSale, Product, No, Price) VALUES (%s, '%s', %s, %s)" %\
+                                (NoSale, i, int(orderMain.orderModel.index(int(orderMain.orderedItems.index(i)), 2).data()),\
+                                    int(orderMain.orderModel.index(int(orderMain.orderedItems.index(i)), 3).data().replace(',','')))
+                            cursor.execute(sql2)
+                        cursor.execute(sql3)
+                        conn.commit()
+
             except sqlite3.Error as e:
                 print("An error occurred:", e.args[0])
                 warning = QMessageBox()

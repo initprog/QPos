@@ -4,7 +4,8 @@ from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 import sqlite3
-from sqlite3 import *
+from contextlib import closing
+from qpos.db import conn
 
 
 class Ui_Form(QObject):
@@ -146,11 +147,11 @@ class Refund(QMainWindow, Ui_Form):
         pay_no = int(self.PayNoBox.text())
         sql = "SELECT * FROM Sale WHERE NoSale='%d'" %pay_no
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+
             for i in data:
                 self.resultListBox.append(str(i))
                 return data
@@ -168,11 +169,11 @@ class Refund(QMainWindow, Ui_Form):
         no = int(no)
         sql = "SELECT * FROM Sale WHERE NoSale='%d'" % no
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            data = c.fetchall()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    data = cursor.fetchall()
+
             if data == []:
                 warning = QMessageBox()
                 warning.setIcon(QMessageBox.Warning)
@@ -200,12 +201,12 @@ class Refund(QMainWindow, Ui_Form):
         pay_no = int(self.PayNoBox.text())
         sql = "DELETE FROM Sale WHERE NoSale='%d'" % pay_no
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            c.execute(sql)
-            conn.commit()
-            conn.close()
-        except Error as e:
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute(sql)
+                    conn.commit()
+
+        except sqlite3.Error as e:
             print(e)
             warning = QMessageBox()
             warning.setIcon(QMessageBox.Warning)
@@ -218,20 +219,16 @@ class Refund(QMainWindow, Ui_Form):
 
     def cashAvailable(self, cost):
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            sql = "SELECT * FROM Management WHERE ID=1"
-            c.execute(sql)
-            data = c.fetchone()
-            total = int(data[2]) + cost
-            dateTime = datetime.datetime.now()
-            sql = "UPDATE Management SET Total='%d' WHERE ID=1" %total
-            c.execute(sql)
-            sql = "UPDATE Management SET DateTime='%s' WHERE ID=1" % dateTime
-            c.execute(sql)
-            conn.commit()
-            conn.close()
-        except Error as e:
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute("SELECT * FROM Management WHERE ID=1")
+                    data = cursor.fetchone()
+                    total = int(data[2]) + cost
+                    dateTime = datetime.datetime.now()
+                    cursor.execute("UPDATE Management SET Total='%d' WHERE ID=1" %total)
+                    cursor.execute("UPDATE Management SET DateTime='%s' WHERE ID=1" % dateTime)
+                    conn.commit()
+        except sqlite3.Error as e:
             print(e)
 
     def goBackToMain(self):

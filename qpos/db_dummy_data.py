@@ -3,25 +3,10 @@
 
 import sqlite3
 from sqlite3 import Error
+from contextlib import closing
+from qpos.db import conn
 
 class DummyData:
-    def createConnection(self):
-        conn = None
-        try:
-            conn = sqlite3.connect("pos.sqlite")
-            return conn
-        except Error as e:
-            print(e)
-        return conn
-
-    def insert(self, conn, sql):
-        try:
-            c = conn.cursor()
-            c.execute(sql)
-            conn.commit()
-        except Error as e:
-            print(e)
-
     def __init__(self):
         sql1 = """INSERT INTO Sale
                           ('NoSale', 'Date', 'Time', 'Price', 'Payment') 
@@ -39,13 +24,13 @@ class DummyData:
                           ('NoSale', 'Date', 'Time', 'Price', 'Payment') 
                            VALUES 
                           (20191201153000,'2019-12-01','15:30:00',24000,'Cash')"""
-        conn = self.createConnection()
-        if conn is not None:
-            self.insert(conn, sql1)
-            self.insert(conn, sql2)
-            self.insert(conn, sql3)
-            self.insert(conn, sql4)
-        else:
-            print("Error. Cannot insert the data.")
+        
+        with closing(conn()) as connection:
+            with closing(connection.cursor()) as cursor:
+                cursor.execute(sql1)
+                cursor.execute(sql2)
+                cursor.execute(sql3)
+                cursor.execute(sql4)
+                connection.commit()
 
 DummyData()
