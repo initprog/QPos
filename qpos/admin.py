@@ -1,6 +1,8 @@
 import datetime
 import sqlite3
 import pandas as pd
+from contextlib import closing
+from qpos.db import conn
 from PyQt6.QtWidgets import *
 from PyQt6 import QtWidgets, QtCore, QtGui
 from qpos.ui import accessAdmin
@@ -101,12 +103,10 @@ class SaleStat(dateStat.Ui_Form):
 
     # get database from 'Sale'table or 'DetailedSale'table
     def getDB(self, which):
-        try:
-            self.con = sqlite3.connect('pos.sqlite')
-            self.cur = self.con.cursor()
-
+        with closing(conn()) as connection:
+            with closing(connection.cursor()) as cursor:
             # test input
-            self.cur.execute("INSERT INTO Sale Values ('1','2005-11-12','12:00:00', '30000', 'cash');")
+            # self.cur.execute("INSERT INTO Sale Values ('1','2005-11-12','12:00:00', '30000', 'cash');")
             # self.cur.execute("INSERT INTO Sale Values ('2','2014-12-31','12:00:00', '3', 'free');")
             # self.cur.execute("INSERT INTO Sale Values ('3','2018-11-01','12:00:00', '300', 'card');")
             # self.cur.execute("INSERT INTO Sale Values ('4','2018-11-02','12:00:00', '300', 'card');")
@@ -123,25 +123,21 @@ class SaleStat(dateStat.Ui_Form):
             # self.cur.execute("INSERT INTO DetailedSale Values ('2','1','Beer','4','12000');")
             # self.cur.execute("INSERT INTO DetailedSale Values ('3','1','Coke','2','2000');")
 
-            if which == 'date':
-                self.sd, self.ed = self.getStatDate()
-                if self.sd:
-                    sql = """SELECT * FROM Sale WHERE Date BETWEEN '{0}' AND '{1}'""".format(self.sd, self.ed)
-                else:
-                    return 0
-            elif which == 'product':
-                sql = """SELECT * FROM DetailedSale"""
+                if which == 'date':
+                    self.sd, self.ed = self.getStatDate()
+                    if self.sd:
+                        sql = """SELECT * FROM Sale WHERE Date BETWEEN '{0}' AND '{1}'""".format(self.sd, self.ed)
+                    else:
+                        return 0
+                elif which == 'product':
+                    sql = """SELECT * FROM DetailedSale"""
 
-            self.cur.execute(sql)
-            self.rows = self.cur.fetchall()
-            if len(self.rows) == 0:
-                return 0
-            else:
-                return self.rows
-        except sqlite3.Error as e:
-            print(e)
-        finally:
-            self.con.close()
+                cursor.execute(sql)
+                rows = cursor.fetchall()
+                if len(rows) == 0:
+                    return 0
+                else:
+                    return rows
 
     # make dataframe from database by specific criteria
     def changeDBtoDF(self, raw):
@@ -311,14 +307,13 @@ class AdminCash(cashAvailable.Ui_Form):
     def showCashAvailable(self):
         try:
             #Existing DB status
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            sql = "SELECT * FROM Management WHERE ID=1"
-            c.execute(sql)
-            data = c.fetchone()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    cursor.execute("SELECT * FROM Management WHERE ID=1")
+                    data = cursor.fetchone()
+            
             self.dbTotal = str(data[2])
             self.beforeBox.setText(self.dbTotal)
-            conn.close()
 
             #Entered state
             self.cash_50000 = int(self.moneyBox50000.text()) * 50000
@@ -341,15 +336,14 @@ class AdminCash(cashAvailable.Ui_Form):
 
     def resetCashAvailable(self):
         try:
-            conn = sqlite3.connect("pos.sqlite")
-            c = conn.cursor()
-            dateTime = datetime.datetime.now()
-            sql = "UPDATE Management SET Total='%d' WHERE ID=1" %self.cur_cash
-            c.execute(sql)
-            sql = "UPDATE Management SET DateTime='%s' WHERE ID=1" % dateTime
-            c.execute(sql)
-            conn.commit()
-            conn.close()
+            with closing(conn()) as connection:
+                with closing(connection.cursor()) as cursor:
+                    dateTime = datetime.datetime.now()
+                    cursor.execute("UPDATE Management SET Total='%d' WHERE ID=1" %self.cur_cash)
+            
+                    cursor.execute("UPDATE Management SET DateTime='%s' WHERE ID=1" % dateTime)
+                    connection.commit()
+
             self.beforeBox.clear()
             self.afterBox.clear()
             self.errorBox.clear()

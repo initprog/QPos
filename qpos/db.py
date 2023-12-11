@@ -6,7 +6,7 @@ import os, sqlite3, logging
 from sqlite3 import Error
 from contextlib import closing
 
-DEFAULT_DB = os.path.realpath("data/pos.sqlite")
+DEFAULT_DB = os.path.join(os.path.dirname(__file__), f"data{os.sep}pos.sqlite")
 
 class SqliteDb:
     """
@@ -76,6 +76,8 @@ def dbcontextlib():
             rows = cursor.execute("SELECT 1").fetchall()
             print(rows)
 
+def conn():
+    return sqlite3.connect(DEFAULT_DB)
 
 '''
         sqlCreateTable_Product = """CREATE TABLE IF NOT EXISTS Product (
@@ -109,13 +111,6 @@ def dbcontextlib():
                                         );"""
 '''
 
-def test_direct_connect():
-    con = sqlite3.connect(DEFAULT_DB)
-    res = con.execute("SELECT * FROM Product")
-    for t in res:
-        print(t)
-
-test_direct_connect()
 
 @dbcall
 def test_wrapper(*arg):
