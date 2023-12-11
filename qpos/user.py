@@ -4,7 +4,7 @@ from PyQt6 import QtGui, QtWidgets
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 
-from ui import initial, orderMain
+from qpos.ui import initial, orderMain
 
 class UserAuth(initial.Ui_Form):
     def __init__(self):

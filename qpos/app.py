@@ -1,9 +1,8 @@
 from PyQt6.QtWidgets import QApplication
-import admin
-import user
+from . import user
+import sys
 
-if __name__ == "__main__":
-    import sys
+def run():
     app = QApplication(sys.argv)
     e = user.UserAuth()
     sys.exit(app.exec())
