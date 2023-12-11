@@ -1,14 +1,8 @@
 import datetime
-import sys
 import sqlite3
 import pandas as pd
-import pyqtgraph as pg
-from PyQt6.QtCore import QModelIndex, pyqtSlot, QObject
 from PyQt6.QtWidgets import *
 from PyQt6 import QtWidgets, QtCore, QtGui
-#from PyQt6.uic.properties import QtGui
-
-from qpos import user
 from qpos.ui import accessAdmin
 from qpos.ui import addProduct
 from qpos.ui import cashAvailable
@@ -16,11 +10,9 @@ from qpos.ui import changePrice
 from qpos.ui import chooseProductManagement
 from qpos.ui import dateStat
 from qpos.ui import deleteProduct
-from qpos.ui import productStat
 from qpos.ui import accessAdmin
 from qpos.ui import orderMain
 
-import time
 
 class AdminAuth(accessAdmin.Ui_Form):
     def __init__(self):

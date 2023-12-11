@@ -2,7 +2,7 @@ import sqlite3
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
-from qpos.ui import orderMain, cashPayment, cardPayment
+from qpos.ui import cashPayment
 from qpos import user
 from qpos.ui.orderMain import *
 

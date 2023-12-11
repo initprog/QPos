@@ -4,8 +4,9 @@
 
 import os, sqlite3, logging
 from sqlite3 import Error
+from contextlib import closing
 
-DEFAULT_DB = "pos.sqlite"
+DEFAULT_DB = os.path.realpath("data/pos.sqlite")
 
 class SqliteDb:
     """
@@ -65,6 +66,17 @@ def dbcall(func):
         return rv
     return with_connection_
 
+
+def dbcontextlib():
+    """
+    Using closing method from contextlib module
+    """
+    with closing(sqlite3.connect(DEFAULT_DB)) as connection:
+        with closing(connection.cursor()) as cursor:
+            rows = cursor.execute("SELECT 1").fetchall()
+            print(rows)
+
+
 '''
         sqlCreateTable_Product = """CREATE TABLE IF NOT EXISTS Product (
                                         NoProduct INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -98,10 +110,12 @@ def dbcall(func):
 '''
 
 def test_direct_connect():
-    con = sqlite3.connect("pos.sqlite")
+    con = sqlite3.connect(DEFAULT_DB)
     res = con.execute("SELECT * FROM Product")
     for t in res:
         print(t)
+
+test_direct_connect()
 
 @dbcall
 def test_wrapper(*arg):

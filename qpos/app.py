@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QApplication
-from . import user
+from qpos import user
 import sys
 
 def run():
