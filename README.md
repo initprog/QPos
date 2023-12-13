@@ -1,17 +1,36 @@
 # Simple POS(Point-Of-Sale) Program
----
 
 - A simple POS system written in Python with PyQt-based user interface and SQLite database.
 - Fork from [PyQt POS System](https://github.com/copolio/PyQt-POS-System)
 
 ## Development Environment
----
 - Python 3.12
 - PyQt6
 - Visual Studio Code
 
+**For developers**
+1. Create a virtual environment
+```
+py -m venv .venv
+```
+2. Activate the virtual environment
+```
+.venv\Scripts\activate
+```
+3. Install required packages
+```
+pip install -r requirements.txt
+```
+4. Run Visual Studio Code
+```
+code .
+```
+5. To run the application from command window
+```
+py -m qpos
+```
+
 ## Index
----
 
 ![소프트웨어공학 2조 최종 발표_2](https://user-images.githubusercontent.com/55977034/96537154-90657d80-12d0-11eb-818a-b7c0f7b8d665.jpg)
 
