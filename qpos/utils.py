@@ -1,5 +1,5 @@
 import hashlib
-import sqlite3
+import nanoid
 from contextlib import closing
 from qpos.db import DEFAULT_DB, conn
 
@@ -16,7 +16,11 @@ def hash_password(pwd):
 def authenticate(userid, pwd):
   with closing(conn()) as connection:
     with closing(connection.cursor()) as cursor:
-      row = cursor.execute(f"SELECT userId, password FROM teammember WHERE userId={userid}").fetchone()
+      row = cursor.execute(f"SELECT userId, password FROM teammember WHERE userId='{userid}'").fetchone()
       if row != None:
         if row[1] == hash_password(pwd): return True
   return False
+
+def generate_nanoid():
+  return nanoid.generate('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 18)
+
