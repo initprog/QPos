@@ -1,4 +1,7 @@
 PyQt6
+nanaoid
 pandas
 pyqtgraph
 matplotlib
+# for development
+pytest

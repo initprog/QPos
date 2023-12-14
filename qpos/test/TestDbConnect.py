@@ -4,10 +4,10 @@ from qpos.db import DEFAULT_DB, conn
 
 """
 Run tests in a module: 
-    pytest test_mod.py
+    pytest -s test_mod.py
 
 Run tests in a directory:
-    pytest test/
+    pytest -s test/
 """
 class TestDbConnect:
     def test_direct_connect(self):

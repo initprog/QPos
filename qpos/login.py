@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from PyQt6.QtWidgets import QWidget, QApplication
+from PyQt6.QtWidgets import QWidget
 from PyQt6.QtGui import QPixmap
 from qpos.ui.login import Ui_login
 from qpos import app
@@ -32,3 +32,4 @@ class Login(Ui_login):
         # check database
         self.msgLabel.setText("Your password might contain characters from a-z 0-9 and special characters.")
         print(f'clicked {datetime.now()}')
+
