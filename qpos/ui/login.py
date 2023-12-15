@@ -88,3 +88,13 @@ class Ui_login(object):
         self.langButton.setText(_translate("login", "English"))
         self.msgLabel.setText(_translate("login", "TextLabel"))
         self.logo.setText(_translate("login", "Logo"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    login = QtWidgets.QWidget()
+    ui = Ui_login()
+    ui.setupUi(login)
+    login.show()
+    sys.exit(app.exec())

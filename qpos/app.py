@@ -1,11 +1,11 @@
 from PyQt6.QtWidgets import QApplication
 from PyQt6 import QtGui
-from qpos import user
+from qpos import login, main, user
 import os, sys
 
 def run():
     app = QApplication(sys.argv)
-    e = user.UserAuth()
+    e = main.MainApp()
     sys.exit(app.exec())
 
 def appicon():

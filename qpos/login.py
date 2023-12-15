@@ -1,9 +1,8 @@
 import os
-from datetime import datetime
 from PyQt6.QtWidgets import QWidget
 from PyQt6.QtGui import QPixmap
 from qpos.ui.login import Ui_login
-from qpos import app
+from qpos import app, utils
 
 class Login(Ui_login):
     def __init__(self):
@@ -15,8 +14,11 @@ class Login(Ui_login):
         logo = os.path.join(os.path.dirname(__file__), f"asset{os.sep}Q.png")
         self.logo.setPixmap(QPixmap(logo))
         self.logo.setScaledContents(True)
-        self.win.show()
+        #self.win.show()
         self.signinButton.clicked.connect(self.signinButton_clicked)
+
+    def showme(self):
+        self.win.show()
 
     def signinButton_clicked(self):
         self.msgLabel.setText('')
@@ -30,6 +32,10 @@ class Login(Ui_login):
             return
         
         # check database
-        self.msgLabel.setText("Your password might contain characters from a-z 0-9 and special characters.")
-        print(f'clicked {datetime.now()}')
+        valid = utils.authenticate(self.userEdit.text(), self.pwdEdit.text())
+        if not valid:
+            self.msgLabel.setText("User Id and/or password do not match.")
+            self.userEdit.setFocus()
+            return
+        
 
