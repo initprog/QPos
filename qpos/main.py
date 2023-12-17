@@ -15,6 +15,6 @@ class MainApp(Ui_MainWindow):
   def check_user(self):
      if MainApp.active_user == '':
         print('inside check_user')
-        login_win = login.Login()
-        login_win.showme()
+        self.login = login.Login()
+        self.login.showme()
         #login_win.show()
