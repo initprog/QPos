@@ -40,9 +40,9 @@ py -m qpos
 
 ![소프트웨어공학 2조 최종 발표_7](https://user-images.githubusercontent.com/55977034/96537258-c440a300-12d0-11eb-8455-5c5a08c69a31.jpg)
 
-### - Log In
+### - Login Form
 
-![login](https://user-images.githubusercontent.com/55977034/96537398-226d8600-12d1-11eb-8ec2-b8bb7748ed20.png)
+![Login form](/qpos/asset/doc/login.jpg)
 
 ### - Basic UI
 
