@@ -2,8 +2,10 @@ from PyQt6 import QtWidgets
 from qpos import app, login
 from qpos.ui.main import Ui_MainWindow
 
+userId = None # indicate active user
+
+
 class MainApp(Ui_MainWindow):
-  active_user = ''
 
   def __init__(self):
       self.win = QtWidgets.QMainWindow()
@@ -13,8 +15,6 @@ class MainApp(Ui_MainWindow):
       self.check_user()
 
   def check_user(self):
-     if MainApp.active_user == '':
-        print('inside check_user')
-        self.login = login.Login()
-        self.login.showme()
-        #login_win.show()
+    global userId
+    if userId == None:
+      self.login = login.Login()
