@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QWidget, QMessageBox, QMainWindow, QDialogButtonBox
 from PyQt6 import QtGui
 from qpos import app
-from qpos.ui import initial, orderMain
+from qpos.view import initial, orderMain
 
 class UserAuth(initial.Ui_Form):
     def __init__(self):

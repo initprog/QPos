@@ -5,15 +5,15 @@ from contextlib import closing
 from qpos.db import conn
 from PyQt6.QtWidgets import *
 from PyQt6 import QtWidgets, QtCore, QtGui
-from qpos.ui import accessAdmin
-from qpos.ui import addProduct
-from qpos.ui import cashAvailable
-from qpos.ui import changePrice
-from qpos.ui import chooseProductManagement
-from qpos.ui import dateStat
-from qpos.ui import deleteProduct
-from qpos.ui import accessAdmin
-from qpos.ui import orderMain
+from qpos.view import accessAdmin
+from qpos.view import addProduct
+from qpos.view import cashAvailable
+from qpos.view import changePrice
+from qpos.view import chooseProductManagement
+from qpos.view import dateStat
+from qpos.view import deleteProduct
+from qpos.view import accessAdmin
+from qpos.view import orderMain
 
 
 class AdminAuth(accessAdmin.Ui_Form):

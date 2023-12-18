@@ -1,7 +1,7 @@
 import os
 from PyQt6.QtWidgets import QWidget
 from PyQt6.QtGui import QPixmap
-from qpos.ui.login import Ui_login
+from qpos.view.login import Ui_login
 from qpos import app, utils
 from qpos.main import userId
 
@@ -15,6 +15,7 @@ class Login(Ui_login, QWidget):
         logo = os.path.join(os.path.dirname(__file__), f"asset{os.sep}Q.png")
         self.logo.setPixmap(QPixmap(logo))
         self.logo.setScaledContents(True)
+        self.setFixedSize(self.size())  # no resize
         self.signinButton.clicked.connect(self.signinButton_clicked)
         self.show()
 

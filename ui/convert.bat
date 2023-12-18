@@ -4,7 +4,7 @@ rem convert .ui to .py
 rem output filename will be the same but with .py extension.
 rem ---------------------------------------------------------
 
-set outfolder=e:\dev\ws-py\QPos\qpos\ui
+set outfolder=e:\dev\ws-py\QPos\qpos\view
 
 rem input file required
 IF "%1"=="" GOTO noparam

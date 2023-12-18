@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'c:\dev\ws-py\QPos\uiforms\login.ui'
+# Form implementation generated from reading view file 'c:\dev\ws-py\QPos\uiforms\login.view'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -142,7 +142,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     login = QtWidgets.QWidget()
-    ui = Ui_login()
-    ui.setupUi(login)
+    view = Ui_login()
+    view.setupUi(login)
     login.show()
     sys.exit(app.exec())

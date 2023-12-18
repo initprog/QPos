@@ -1,6 +1,6 @@
 from PyQt6 import QtWidgets
 from qpos import app, login
-from qpos.ui.main import Ui_MainWindow
+from qpos.view.main import Ui_MainWindow
 
 userId = None # indicate active user
 

@@ -1,26 +1,6 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
-from contextlib import closing
-from qpos.db import conn
-from qpos.ui import orderMain, choosePayment
-from qpos.ui.orderMain import *
-import datetime
-import sqlite3
-from qpos import user
-
-#Cash 결제 및 시재 모델
-cashReceived = ''
-sql = "SELECT Total FROM Management WHERE ID = (SELECT MAX(ID) FROM Management)"
-try:
-    with closing(conn()) as connection:
-        with closing(connection.cursor()) as cursor:
-            cursor.execute(sql)
-            data = cursor.fetchall()
-
-    currentCash = data[0][0]
-except sqlite3.Error as e:
-    print("An error occurred:", e.args[0])
 
 class Ui_Form(QObject):
     def setupUi(self, Form):
@@ -155,44 +135,25 @@ class Ui_Form(QObject):
         self.priceBox.setMinimumSize(QtCore.QSize(400, 100))
         self.priceBox.setMaximumSize(QtCore.QSize(400, 100))
         self.priceBox.setReadOnly(True)
-        self.priceBox.setStyleSheet("font: 75 55pt \"Sego UI\";")
         self.priceBox.setObjectName("priceBox")
         self.horizontalLayout_4.addWidget(self.priceBox)
         self.verticalLayout.addLayout(self.horizontalLayout_4)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.cashLabel = QtWidgets.QLabel(self.layoutWidget2)
-        self.cashLabel.setMinimumSize(QtCore.QSize(150, 100))
-        self.cashLabel.setMaximumSize(QtCore.QSize(200, 100))
-        self.cashLabel.setStyleSheet("font: 75 35pt \"Sego UI\";")
-        self.cashLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.cashLabel.setObjectName("cashLabel")
-        self.horizontalLayout_5.addWidget(self.cashLabel)
-        self.cashBox = QtWidgets.QPlainTextEdit(self.layoutWidget2)
-        self.cashBox.setMinimumSize(QtCore.QSize(400, 100))
-        self.cashBox.setMaximumSize(QtCore.QSize(400, 100))
-        self.cashBox.setReadOnly(True)
-        self.cashBox.setStyleSheet("font: 75 55pt \"Sego UI\";")
-        self.cashBox.setObjectName("cashBox")
-        self.horizontalLayout_5.addWidget(self.cashBox)
+        self.cardNoLabel = QtWidgets.QLabel(self.layoutWidget2)
+        self.cardNoLabel.setMinimumSize(QtCore.QSize(150, 100))
+        self.cardNoLabel.setMaximumSize(QtCore.QSize(200, 100))
+        self.cardNoLabel.setStyleSheet("font: 75 35pt \"Sego UI\";")
+        self.cardNoLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.cardNoLabel.setObjectName("cardNoLabel")
+        self.horizontalLayout_5.addWidget(self.cardNoLabel)
+        self.cardNoBox = QtWidgets.QTextEdit(self.layoutWidget2)
+        self.cardNoBox.setMinimumSize(QtCore.QSize(400, 100))
+        self.cardNoBox.setMaximumSize(QtCore.QSize(400, 100))
+        self.cardNoBox.setReadOnly(True)
+        self.cardNoBox.setObjectName("cardNoBox")
+        self.horizontalLayout_5.addWidget(self.cardNoBox)
         self.verticalLayout.addLayout(self.horizontalLayout_5)
-        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.changeLabel = QtWidgets.QLabel(self.layoutWidget2)
-        self.changeLabel.setMinimumSize(QtCore.QSize(150, 100))
-        self.changeLabel.setMaximumSize(QtCore.QSize(200, 100))
-        self.changeLabel.setStyleSheet("font: 75 35pt \"Sego UI\";")
-        self.changeLabel.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.changeLabel.setObjectName("changeLabel")
-        self.horizontalLayout_6.addWidget(self.changeLabel)
-        self.changeBox = QtWidgets.QPlainTextEdit(self.layoutWidget2)
-        self.changeBox.setMinimumSize(QtCore.QSize(400, 100))
-        self.changeBox.setMaximumSize(QtCore.QSize(400, 100))
-        self.changeBox.setReadOnly(True)
-        self.changeBox.setStyleSheet("font: 75 55pt \"Sego UI\";")
-        self.changeBox.setObjectName("changeBox")
-        self.horizontalLayout_6.addWidget(self.changeBox)
-        self.verticalLayout.addLayout(self.horizontalLayout_6)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
@@ -218,7 +179,7 @@ class Ui_Form(QObject):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Cash Payment"))
+        Form.setWindowTitle(_translate("Form", "Card Payment"))
         self.timeLabel.setText(_translate("Form", "Time: "))
         self.goBackBtn.setText(_translate("Form", "Go Back"))
         self.btn9.setText(_translate("Form", "9"))
@@ -232,184 +193,18 @@ class Ui_Form(QObject):
         self.btn3.setText(_translate("Form", "3"))
         self.btn0.setText(_translate("Form", "0"))
         self.priceLabel.setText(_translate("Form", "결제 Amount"))
-        self.cashLabel.setText(_translate("Form", "받은 Amount"))
-        self.changeLabel.setText(_translate("Form", "거스름돈"))
+        self.cardNoLabel.setText(_translate("Form", "Card 번호"))
         self.payBtn.setText(_translate("Form", "결제하기"))
 
-class CashPayment(QMainWindow, Ui_Form):
+class CardPayment(QMainWindow, Ui_Form):
     def __init__(self, parent=None):
-        global totalPrice
         super(Ui_Form, self).__init__(parent)
         self.setupUi(self)
-        self.goBackBtn.clicked.connect(self.onGoBackBtnClicked)
-        self.btn9.clicked.connect(self.onBtn9Clicked)
-        self.btn8.clicked.connect(self.onBtn8Clicked)
-        self.btn7.clicked.connect(self.onBtn7Clicked)
-        self.btn6.clicked.connect(self.onBtn6Clicked)
-        self.btn5.clicked.connect(self.onBtn5Clicked)
-        self.btn4.clicked.connect(self.onBtn4Clicked)
-        self.btn3.clicked.connect(self.onBtn3Clicked)
-        self.btn2.clicked.connect(self.onBtn2Clicked)
-        self.btn1.clicked.connect(self.onBtn1Clicked)
-        self.btn0.clicked.connect(self.onBtn0Clicked)
-        self.payBtn.clicked.connect(self.onPayBtnClicked)
-        self.updateTime()
-        self.timer = QtCore.QTimer(self)
-        self.timer.timeout.connect(self.updateTime)
-        self.timer.start(1000)
-        self.priceBox.setPlainText('{:,}'.format(orderMain.totalPrice))
         self.show()
-
-    @pyqtSlot()
-    def updateTime(self):
-        current = QtCore.QDateTime.currentDateTime()
-        hour = str(current.time().hour())
-        min = str(current.time().minute())
-        sec = str(current.time().second())
-        self.timeBox.setPlainText(hour + ":" + min + ":" + sec)
-
-    @pyqtSlot()
-    def onGoBackBtnClicked(self):
-        self.close()
-        choosePayment.ChoosePayment(self)
-
-    @pyqtSlot()
-    def onBtn9Clicked(self):
-        global cashReceived
-        cashReceived = cashReceived+'9'
-        self.cashBox.setPlainText('{:,}'.format(int(cashReceived)))
-
-    @pyqtSlot()
-    def onBtn8Clicked(self):
-        global cashReceived
-        cashReceived = cashReceived+'8'
-        self.cashBox.setPlainText('{:,}'.format(int(cashReceived)))
-
-    @pyqtSlot()
-    def onBtn7Clicked(self):
-        global cashReceived
-        cashReceived = cashReceived+'7'
-        self.cashBox.setPlainText('{:,}'.format(int(cashReceived)))
-
-    @pyqtSlot()
-    def onBtn6Clicked(self):
-        global cashReceived
-        cashReceived = cashReceived+'6'
-        self.cashBox.setPlainText('{:,}'.format(int(cashReceived)))
-
-    @pyqtSlot()
-    def onBtn5Clicked(self):
-        global cashReceived
-        cashReceived = cashReceived+'5'
-        self.cashBox.setPlainText('{:,}'.format(int(cashReceived)))
-
-    @pyqtSlot()
-    def onBtn4Clicked(self):
-        global cashReceived
-        cashReceived = cashReceived+'4'
-        self.cashBox.setPlainText('{:,}'.format(int(cashReceived)))
-
-    @pyqtSlot()
-    def onBtn3Clicked(self):
-        global cashReceived
-        cashReceived = cashReceived+'3'
-        self.cashBox.setPlainText('{:,}'.format(int(cashReceived)))
-
-    @pyqtSlot()
-    def onBtn2Clicked(self):
-        global cashReceived
-        cashReceived = cashReceived+'2'
-        self.cashBox.setPlainText('{:,}'.format(int(cashReceived)))
-
-    @pyqtSlot()
-    def onBtn1Clicked(self):
-        global cashReceived
-        cashReceived = cashReceived+'1'
-        self.cashBox.setPlainText('{:,}'.format(int(cashReceived)))
-
-    @pyqtSlot()
-    def onBtn0Clicked(self):
-        global cashReceived
-        cashReceived = cashReceived+'0'
-        self.cashBox.setPlainText('{:,}'.format(int(cashReceived)))
-
-    @pyqtSlot()
-    def onPayBtnClicked(self):
-        global cashReceived, totalPrice, currentCash
-
-        now = datetime.datetime.now()
-        NoSale = int(now.strftime("%Y%m%d%H%M%S"))
-        Date = str(datetime.date.today())
-        Time = str(now.time())
-        Payment = 'Cash'
-        DateTime = str(datetime.datetime.now())
-
-        if cashReceived == '':
-            pass
-        elif orderMain.totalPrice > int(cashReceived):
-            currentCash += int(cashReceived)
-            sql1 = "INSERT INTO Sale (NoSale, Date, Time, Price, Payment) VALUES (%s, '%s', '%s', %s, '%s')" %\
-                   (NoSale, Date, Time, int(cashReceived), Payment)
-            sql3 = "INSERT INTO MANAGEMENT (DateTime, Total) VALUES ('%s', %s)" % (DateTime, currentCash)
-            try:
-                with closing(conn()) as connection:
-                    with closing(connection.cursor()) as cursor:
-                        cursor.execute(sql1)
-                        cursor.execute(sql3)
-                        connection.commit()
-
-            except sqlite3.Error as e:
-                print("An error occurred:", e.args[0])
-                warning = QMessageBox()
-                warning.setIcon(QMessageBox.Warning)
-                warning.setText("문제가 발생하여 결제가 완료되지 않았습니다\n재시도 하십시오")
-                warning.setWindowTitle("오류")
-                warning.exec()
-            orderMain.totalPrice = orderMain.totalPrice - int(cashReceived)
-            cashReceived = ''
-            self.priceBox.setPlainText('{:,}'.format(orderMain.totalPrice))
-            self.cashBox.setPlainText(cashReceived)
-        else:
-            change = int(cashReceived) - orderMain.totalPrice
-            cashReceived = ''
-            currentCash = currentCash + orderMain.totalPrice - change
-            self.changeBox.setPlainText('{:,}'.format(change))
-            msgbox = QtWidgets.QMessageBox(self)
-            msgbox.question(self, '결제 완료', '결제가 완료되었습니다', QtWidgets.QMessageBox.Ok)
-
-            sql1 = "INSERT INTO Sale (NoSale, Date, Time, Price, Payment) VALUES (%s, '%s', '%s', %s, '%s')"%\
-                   (NoSale, Date, Time, orderMain.totalPrice, Payment)
-            sql3 = "INSERT INTO MANAGEMENT (DateTime, Total) VALUES ('%s', %s)"%(DateTime, currentCash)
-            try:
-                with closing(conn()) as connection:
-                    with closing(connection.cursor()) as cursor:
-                        cursor.execute(sql1)
-                        for i in orderMain.orderedItems:
-                            sql2 = "INSERT INTO DetailedSale (NoSale, Product, No, Price) VALUES (%s, '%s', %s, %s)" %\
-                                (NoSale, i, int(orderMain.orderModel.index(int(orderMain.orderedItems.index(i)), 2).data()),\
-                                    int(orderMain.orderModel.index(int(orderMain.orderedItems.index(i)), 3).data().replace(',','')))
-                            cursor.execute(sql2)
-                        cursor.execute(sql3)
-                        conn.commit()
-
-            except sqlite3.Error as e:
-                print("An error occurred:", e.args[0])
-                warning = QMessageBox()
-                warning.setIcon(QMessageBox.Warning)
-                warning.setText("문제가 발생하여 결제가 완료되지 않았습니다\n재시도 하십시오")
-                warning.setWindowTitle("오류")
-                warning.exec()
-            self.close()
-            orderMain.orderNo = 1
-            orderMain.orderedItems = []
-            orderMain.totalPrice = 0
-            orderMain.orderModel = QtGui.QStandardItemModel()
-            orderMain.orderModel.setHorizontalHeaderLabels(['No', 'Product Name', 'Qty', 'Amount'])
-            self.order = orderMain.OrderMain(self)
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    e = CashPayment()
+    e = CardPayment()
     sys.exit(app.exec_())
 

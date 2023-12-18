@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'main.ui'
+# Form implementation generated from reading view file 'main.view'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
+    view = Ui_MainWindow()
+    view.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec())

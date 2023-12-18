@@ -4,7 +4,7 @@ from qpos.db import conn
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
-from qpos.ui import refund, choosePayment
+from qpos.view import refund, choosePayment
 from qpos import admin
 
 #order list model
