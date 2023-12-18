@@ -23,6 +23,9 @@ class Login(Ui_login, QWidget):
         if userId:
             print(f'ok to close {userId}')
             event.accept()
+        else:
+            # cannot close login form without passing authentication
+            event.ignore()
 
     def signinButton_clicked(self):
         global userId
