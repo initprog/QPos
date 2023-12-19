@@ -109,7 +109,7 @@ class Ui_MainWindow(object):
         icon.addPixmap(QtGui.QPixmap(":/icon/icon/home-4-48 (2).ico"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.toolBox.addItem(self.general_page, icon, "")
         self.cars_page = QtWidgets.QWidget()
-        self.cars_page.setGeometry(QtCore.QRect(0, 0, 162, 512))
+        self.cars_page.setGeometry(QtCore.QRect(0, 0, 83, 116))
         self.cars_page.setObjectName("cars_page")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.cars_page)
         self.verticalLayout_2.setContentsMargins(5, 0, 5, 5)
@@ -145,7 +145,7 @@ class Ui_MainWindow(object):
         icon1.addPixmap(QtGui.QPixmap(":/icon/icon/car-4-48.ico"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.toolBox.addItem(self.cars_page, icon1, "")
         self.social_media_page = QtWidgets.QWidget()
-        self.social_media_page.setGeometry(QtCore.QRect(0, 0, 162, 512))
+        self.social_media_page.setGeometry(QtCore.QRect(0, 0, 83, 79))
         self.social_media_page.setObjectName("social_media_page")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.social_media_page)
         self.verticalLayout_3.setContentsMargins(5, 0, 5, 5)
@@ -310,6 +310,7 @@ class Ui_MainWindow(object):
         self.toolBox.setItemText(self.toolBox.indexOf(self.social_media_page), _translate("MainWindow", "Social Media"))
         self.lineEdit_5.setPlaceholderText(_translate("MainWindow", "Search Something..."))
 
+from qpos.asset import resource_rc
 
 if __name__ == "__main__":
     import sys
