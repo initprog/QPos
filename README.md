@@ -6,7 +6,7 @@
 ## Development Environment
 - Python 3.12
 - PyQt6
-- Qt Designer
+- [Qt Designer](#qt-designer-tips)
 - Visual Studio Code
 
 **For developers**
@@ -29,6 +29,34 @@ code .
 5. To run the application from command window
 ```
 py -m qpos
+```
+
+## Qt Designer Tips
+Qt Designer is on `pyqt-tools` package, separate from `pyqt6` package.
+As of writing, `pyqt-tools` only support Python v3.9. Therefore if you plan to use different version of Python
+than v3.9 you need to install multiple versions.
+
+Create a link to `.venv\Lib\site-packages\qt6_applications\Qt\bin\designer.exe` and place it on your Desktop
+to bring up the Designer window.
+
+### Convert designer file (.ui) into .py
+```
+.venv\scripts\pyuic6 -x input-file -o output-file
+```
+When using resource file with the Designer, you need to append an import statement for the resource file in the 
+generated file.
+For example:
+```
+from qpos.asset import resource_rc
+```
+
+### Compile resource file (.qrc) to .py
+Use `rcc.exe` that is bundled with Qt Designer to compile the file.
+* Make sure to use **-g python** parameter
+* Update the generated file and replace import **PySide** to **PyQt6**
+  
+```
+.venv\Lib\site-packages\qt6_applications\Qt\bin\rcc -g python [qrc-file] -o output-file
 ```
 
 ## Introduction
