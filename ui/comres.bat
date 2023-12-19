@@ -18,4 +18,4 @@ set outfolder=%infolder%
 set outfile=%~n1_rc.py
 
 rem -x parameter generate extra code to test and display the class
-C:\dev\qtdesigner\.venv\Lib\site-packages\qt6_applications\Qt\bin\rcc %infolder%\%infile% -o %outfolder%\%outfile%
+C:\dev\qtdesigner\.venv\Lib\site-packages\qt6_applications\Qt\bin\rcc -g python %infolder%\%infile% -o %outfolder%\%outfile%
