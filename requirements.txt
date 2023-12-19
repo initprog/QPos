@@ -1,5 +1,5 @@
 PyQt6
-nanaoid
+nanoid
 pandas
 pyqtgraph
 matplotlib
