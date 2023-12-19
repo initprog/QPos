@@ -5,7 +5,9 @@ import os, sys
 
 def run():
     app = QApplication(sys.argv)
-    e = main.MainApp()
+    win = main.MainApp()
+    win.show()
+    
     sys.exit(app.exec())
 
 def appicon():

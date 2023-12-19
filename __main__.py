@@ -11,6 +11,7 @@ if __name__ == '__main__':
 	import sys
 	from PyQt6.QtWidgets import QApplication
 	from qpos.login import Login
+	
 	app = QApplication([])
 	e = Login()
 	sys.exit(app.exec())
