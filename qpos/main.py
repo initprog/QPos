@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QApplication, QMainWindow
 
-from qpos import app
+from qpos import app, login
 from qpos.view.main_window_ui import Ui_MainWindow
 
 from qpos.home import Home
@@ -61,6 +61,8 @@ class MainApp(QMainWindow):
         self.mazda_btn.clicked.connect(self.show_selected_window)
         self.youtube_btn.clicked.connect(self.show_selected_window)
         self.tumbr_btn.clicked.connect(self.show_selected_window)
+
+        self.check_user()
 
     def show_home_window(self):
         """
@@ -138,6 +140,13 @@ class MainApp(QMainWindow):
                 button.setChecked(True)
 
 
+    def check_user(self):
+        global userId
+
+        if userId == None:
+            self.login = login.Login()
+
+        
 if __name__ == '__main__':
     import sys
 
