@@ -10,7 +10,7 @@ from qpos.mazda import Mazda
 from qpos.toyota import Toyota
 from qpos.tumbr import Tumbr
 from qpos.youtube import Youtube
-
+from qpos.checkout import Checkout
 
 
 class MainApp(QMainWindow):
@@ -31,6 +31,7 @@ class MainApp(QMainWindow):
         self.mazda_btn = self.ui.pushButton_5
         self.youtube_btn = self.ui.pushButton_6
         self.tumbr_btn = self.ui.pushButton_7
+        self.checkout_btn = self.ui.btnCheckout
 
         ## =======================================================================================================
         ## Create dict for menu buttons and tab windows
@@ -43,6 +44,7 @@ class MainApp(QMainWindow):
             self.mazda_btn: Mazda(),
             self.youtube_btn: Youtube(),
             self.tumbr_btn: Tumbr(),
+            self.checkout_btn: Checkout(),
         }
 
         ## =======================================================================================================
@@ -62,7 +64,7 @@ class MainApp(QMainWindow):
         self.mazda_btn.clicked.connect(self.show_selected_window)
         self.youtube_btn.clicked.connect(self.show_selected_window)
         self.tumbr_btn.clicked.connect(self.show_selected_window)
-
+        self.checkout_btn.clicked.connect(self.show_selected_window)
         self.check_user()
 
     def show_home_window(self):

@@ -202,6 +202,21 @@ border: none;</string>
              </widget>
             </item>
             <item>
+             <widget class="QPushButton" name="btnCheckout">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Checkout</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -221,8 +236,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>83</width>
-             <height>116</height>
+             <width>162</width>
+             <height>512</height>
             </rect>
            </property>
            <attribute name="icon">
@@ -322,8 +337,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>83</width>
-             <height>79</height>
+             <width>162</width>
+             <height>512</height>
             </rect>
            </property>
            <attribute name="icon">
