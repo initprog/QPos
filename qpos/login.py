@@ -3,11 +3,11 @@ from PyQt6.QtWidgets import QWidget
 from PyQt6.QtGui import QPixmap
 from qpos.view.login import Ui_login
 from qpos import app, utils
-from qpos.main import userId
 
 class Login(Ui_login, QWidget):
-    def __init__(self):
+    def __init__(self, parent=None):
         super().__init__()
+        self.parent = parent
         self.setupUi(self)
         self.setWindowIcon(app.appicon())
         self.msgLabel.setText('')
@@ -20,16 +20,15 @@ class Login(Ui_login, QWidget):
         self.show()
 
     def closeEvent(self, event):
-        global userId
-        if userId:
-            print(f'ok to close {userId}')
+        if self.parent.auth_user != None:
+            print(f'ok to close {self.parent.auth_user}')
+            self.parent.ui.auth_user.setToolTip(self.parent.auth_user)
             event.accept()
         else:
             # cannot close login form without passing authentication
             event.ignore()
 
     def signinButton_clicked(self):
-        global userId
         self.msgLabel.setText('')
         if self.userEdit.text() == '':
             self.msgLabel.setText('Please enter the user id')
@@ -46,5 +45,5 @@ class Login(Ui_login, QWidget):
             self.msgLabel.setText("User Id and/or password do not match.")
             self.userEdit.setFocus()
             return
-        userId = self.userEdit.text()
+        self.parent.auth_user = self.userEdit.text()
         self.close()

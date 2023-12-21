@@ -11,7 +11,7 @@ from qpos.toyota import Toyota
 from qpos.tumbr import Tumbr
 from qpos.youtube import Youtube
 
-userId = None # indicate active user
+
 
 class MainApp(QMainWindow):
     def __init__(self):
@@ -19,6 +19,7 @@ class MainApp(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.setWindowIcon(app.appicon())
+        self.auth_user = None # current authenticated user
 
         ## =======================================================================================================
         ## Get all the objects in windows
@@ -141,10 +142,8 @@ class MainApp(QMainWindow):
 
 
     def check_user(self):
-        global userId
-
-        if userId == None:
-            self.login = login.Login()
+        if self.auth_user == None:
+            self.login = login.Login(parent=self)
 
         
 if __name__ == '__main__':
