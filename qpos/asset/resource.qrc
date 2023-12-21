@@ -12,5 +12,10 @@
     <file>icon/group-48.ico</file>
     <file>icon/home-4-48 (2).ico</file>
     <file>icon/search-3-48.ico</file>
+    <file>icon/more-32.png</file>
+    <file>icon/more-48.png</file>
+    <file>icon/more-wh.svg</file>
+    <file>icon/settings-32.png</file>
+    <file>icon/settings-48.png</file>
   </qresource>
 </RCC>

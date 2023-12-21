@@ -15,7 +15,7 @@ orderModel.setHorizontalHeaderLabels(['No', 'Product Name', 'Qty', 'Amount'])
 
 class Checkout(QtWidgets.QWidget):
     def __init__(self, parent=None):
-        super(Checkout, self).__init__()
+        super(Checkout, self).__init__(parent)
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.updateTime()
@@ -59,7 +59,7 @@ class Checkout(QtWidgets.QWidget):
 
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
-            self.productList.setModel(model)
+            self.ui.productList.setModel(model)
         except sqlite3.Error as e:
             print("An error occurred:", e.args[0])
 
@@ -76,7 +76,7 @@ class Checkout(QtWidgets.QWidget):
 
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
-            self.productList.setModel(model)
+            self.ui.productList.setModel(model)
         except sqlite3.Error as e:
             print("An error occurred:", e.args[0])
 
@@ -93,7 +93,7 @@ class Checkout(QtWidgets.QWidget):
 
             for i in data:
                 model.appendRow(QtGui.QStandardItem(str(i[1])))
-            self.productList.setModel(model)
+            self.ui.productList.setModel(model)
         except sqlite3.Error as e:
             print("An error occurred:", e.args[0])
 

@@ -119,7 +119,7 @@ border: none;</string>
 </string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="tabSpacing">
            <number>10</number>
@@ -129,8 +129,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>162</width>
-             <height>512</height>
+             <width>164</width>
+             <height>509</height>
             </rect>
            </property>
            <attribute name="icon">
@@ -217,6 +217,36 @@ border: none;</string>
              </widget>
             </item>
             <item>
+             <widget class="QPushButton" name="btnTransaction">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Transactions</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnReport">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Reports</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -236,8 +266,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>162</width>
-             <height>512</height>
+             <width>164</width>
+             <height>509</height>
             </rect>
            </property>
            <attribute name="icon">
@@ -245,7 +275,7 @@ border: none;</string>
              <normaloff>:/icon/icon/car-4-48.ico</normaloff>:/icon/icon/car-4-48.ico</iconset>
            </attribute>
            <attribute name="label">
-            <string>Cars</string>
+            <string>...</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <property name="spacing">
@@ -274,7 +304,7 @@ border: none;</string>
                <enum>Qt::NoFocus</enum>
               </property>
               <property name="text">
-               <string>Toyota</string>
+               <string>Orders</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -292,7 +322,7 @@ border: none;</string>
                <enum>Qt::NoFocus</enum>
               </property>
               <property name="text">
-               <string>Lexus</string>
+               <string>Items</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -310,7 +340,22 @@ border: none;</string>
                <enum>Qt::NoFocus</enum>
               </property>
               <property name="text">
-               <string>Mazda</string>
+               <string>Invoices</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnCustomer">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Customers</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -337,8 +382,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>162</width>
-             <height>512</height>
+             <width>164</width>
+             <height>509</height>
             </rect>
            </property>
            <attribute name="icon">
@@ -346,7 +391,7 @@ border: none;</string>
              <normaloff>:/icon/icon/group-48.ico</normaloff>:/icon/icon/group-48.ico</iconset>
            </attribute>
            <attribute name="label">
-            <string>Social Media</string>
+            <string>Settings</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <property name="spacing">
