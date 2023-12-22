@@ -119,7 +119,7 @@ border: none;</string>
 </string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <property name="tabSpacing">
            <number>10</number>
@@ -129,13 +129,13 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>164</width>
-             <height>509</height>
+             <width>142</width>
+             <height>512</height>
             </rect>
            </property>
            <attribute name="icon">
             <iconset resource="../qpos/asset/resource.qrc">
-             <normaloff>:/icon/icon/home-4-48 (2).ico</normaloff>:/icon/icon/home-4-48 (2).ico</iconset>
+             <normaloff>:/icon/icon/home-48w.png</normaloff>:/icon/icon/home-48w.png</iconset>
            </attribute>
            <attribute name="label">
             <string>General</string>
@@ -266,16 +266,16 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>164</width>
-             <height>509</height>
+             <width>142</width>
+             <height>512</height>
             </rect>
            </property>
            <attribute name="icon">
             <iconset resource="../qpos/asset/resource.qrc">
-             <normaloff>:/icon/icon/car-4-48.ico</normaloff>:/icon/icon/car-4-48.ico</iconset>
+             <normaloff>:/icon/icon/more-48w.png</normaloff>:/icon/icon/more-48w.png</iconset>
            </attribute>
            <attribute name="label">
-            <string>...</string>
+            <string>More</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <property name="spacing">
@@ -382,13 +382,13 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>164</width>
-             <height>509</height>
+             <width>142</width>
+             <height>512</height>
             </rect>
            </property>
            <attribute name="icon">
             <iconset resource="../qpos/asset/resource.qrc">
-             <normaloff>:/icon/icon/group-48.ico</normaloff>:/icon/icon/group-48.ico</iconset>
+             <normaloff>:/icon/icon/cog-48w.png</normaloff>:/icon/icon/cog-48w.png</iconset>
            </attribute>
            <attribute name="label">
             <string>Settings</string>
