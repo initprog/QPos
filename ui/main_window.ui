@@ -129,7 +129,7 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>142</width>
+             <width>147</width>
              <height>512</height>
             </rect>
            </property>
@@ -266,7 +266,7 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>142</width>
+             <width>147</width>
              <height>512</height>
             </rect>
            </property>
@@ -382,7 +382,7 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>142</width>
+             <width>147</width>
              <height>512</height>
             </rect>
            </property>
@@ -507,7 +507,7 @@ border: none;</string>
              <property name="icon">
               <iconset resource="../qpos/asset/resource.qrc">
                <normaloff>:/icon/icon/arrow-96-48.ico</normaloff>
-               <normalon>:/icon/icon/arrow-31-48.ico</normalon>:/icon/icon/arrow-96-48.ico</iconset>
+               <normalon>:/icon/icon/burger-48.png</normalon>:/icon/icon/arrow-96-48.ico</iconset>
              </property>
              <property name="iconSize">
               <size>
