@@ -140,7 +140,7 @@ class ChoosePayment(QDialog, Ui_Form):
     @pyqtSlot()
     def onGoBackBtnClicked(self):
         self.close()
-        self.order = user.Order(self)
+        #self.order = user.Order(self)
 
 if __name__ == "__main__":
     import sys

@@ -116,7 +116,7 @@ class Checkout(QtWidgets.QWidget):
             #warning.exec()
             return False
         else:
-            self.close()
+            #self.close()
             choosePayment.ChoosePayment(self)
             #choosePayment.orderMain.totalPrice = self.totalPrice
             #choosePayment.orderMain.orderModel = self.orderModel
