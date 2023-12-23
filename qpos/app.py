@@ -1,7 +1,7 @@
 import platform, ctypes
 from PyQt6.QtWidgets import QApplication
 from PyQt6 import QtGui
-from qpos import login, main, user
+from qpos import main
 import os, sys
 
 QPOS_APPID = 'nagwos.commerce.pos'
