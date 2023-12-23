@@ -162,5 +162,5 @@ class Checkout(QtWidgets.QWidget):
     def openAdmin(self):
         self.Form = QtWidgets.QMainWindow()
         self.ds = admin.AdminAuth()
-        self.close()
+        #self.close()
 
