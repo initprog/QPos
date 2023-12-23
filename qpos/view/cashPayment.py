@@ -4,7 +4,6 @@ from PyQt6.QtCore import *
 from contextlib import closing
 from qpos.db import conn
 from qpos.view import choosePayment
-from qpos.checkout import totalPrice, orderNo, orderModel, orderedItems
 import datetime
 import sqlite3
 from qpos import user
@@ -238,9 +237,9 @@ class Ui_Form(QObject):
 
 class CashPayment(QMainWindow, Ui_Form):
     def __init__(self, parent=None):
-        global totalPrice
         super(Ui_Form, self).__init__(parent)
         self.setupUi(self)
+        self.checkout = parent
         self.goBackBtn.clicked.connect(self.onGoBackBtnClicked)
         self.btn9.clicked.connect(self.onBtn9Clicked)
         self.btn8.clicked.connect(self.onBtn8Clicked)
@@ -257,7 +256,7 @@ class CashPayment(QMainWindow, Ui_Form):
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.updateTime)
         self.timer.start(1000)
-        self.priceBox.setPlainText('{:,}'.format(totalPrice))
+        self.priceBox.setPlainText('{:,}'.format(self.checkout.totalPrice))
         self.show()
 
     @pyqtSlot()
@@ -335,7 +334,7 @@ class CashPayment(QMainWindow, Ui_Form):
 
     @pyqtSlot()
     def onPayBtnClicked(self):
-        global cashReceived, totalPrice, currentCash
+        global cashReceived, currentCash
 
         now = datetime.datetime.now()
         NoSale = int(now.strftime("%Y%m%d%H%M%S"))
@@ -346,7 +345,7 @@ class CashPayment(QMainWindow, Ui_Form):
 
         if cashReceived == '':
             pass
-        elif totalPrice > int(cashReceived):
+        elif self.checkout.totalPrice > int(cashReceived):
             currentCash += int(cashReceived)
             sql1 = "INSERT INTO Sale (NoSale, Date, Time, Price, Payment) VALUES (%s, '%s', '%s', %s, '%s')" %\
                    (NoSale, Date, Time, int(cashReceived), Payment)
@@ -365,20 +364,20 @@ class CashPayment(QMainWindow, Ui_Form):
                 warning.setText("문제가 발생하여 결제가 완료되지 않았습니다\n재시도 하십시오")
                 warning.setWindowTitle("오류")
                 warning.exec()
-            totalPrice = totalPrice - int(cashReceived)
+            self.checkout.totalPrice = self.checkout.totalPrice - int(cashReceived)
             cashReceived = ''
-            self.priceBox.setPlainText('{:,}'.format(totalPrice))
+            self.priceBox.setPlainText('{:,}'.format(self.checkout.totalPrice))
             self.cashBox.setPlainText(cashReceived)
         else:
-            change = int(cashReceived) - totalPrice
+            change = int(cashReceived) - self.checkout.totalPrice
             cashReceived = ''
-            currentCash = currentCash + totalPrice - change
+            currentCash = currentCash + self.checkout.totalPrice - change
             self.changeBox.setPlainText('{:,}'.format(change))
             msgbox = QtWidgets.QMessageBox(self)
-            msgbox.question(self, '결제 완료', '결제가 완료되었습니다', QtWidgets.QMessageBox.Ok)
+            msgbox.question(self, '결제 완료', '결제가 완료되었습니다', QtWidgets.QMessageBox.StandardButton.Ok)
 
             sql1 = "INSERT INTO Sale (NoSale, Date, Time, Price, Payment) VALUES (%s, '%s', '%s', %s, '%s')"%\
-                   (NoSale, Date, Time, totalPrice, Payment)
+                   (NoSale, Date, Time, self.checkout.totalPrice, Payment)
             sql3 = "INSERT INTO MANAGEMENT (DateTime, Total) VALUES ('%s', %s)"%(DateTime, currentCash)
             try:
                 with closing(conn()) as connection:
@@ -402,7 +401,7 @@ class CashPayment(QMainWindow, Ui_Form):
             self.close()
             orderNo = 1
             orderedItems = []
-            totalPrice = 0
+            self.checkout.totalPrice = 0
             orderModel = QtGui.QStandardItemModel()
             orderModel.setHorizontalHeaderLabels(['No', 'Product Name', 'Qty', 'Amount'])
 

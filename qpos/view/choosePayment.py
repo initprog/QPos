@@ -108,6 +108,7 @@ class ChoosePayment(QDialog, Ui_Form):
     def __init__(self, parent=None):
         super(Ui_Form, self).__init__(parent)
         self.setupUi(self)
+        self.checkout = parent
         self.cashBtn.clicked.connect(self.onCashBtnClicked)
         self.cardBtn.clicked.connect(self.onCardBtnClicked)
         self.goBackBtn.clicked.connect(self.onGoBackBtnClicked)
@@ -129,7 +130,7 @@ class ChoosePayment(QDialog, Ui_Form):
     @pyqtSlot()
     def onCashBtnClicked(self):
         self.close()
-        cashPayment.CashPayment(self)
+        cashPayment.CashPayment(self.checkout)
 
     @pyqtSlot()
     def onCardBtnClicked(self):

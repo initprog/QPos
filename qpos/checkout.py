@@ -6,13 +6,6 @@ import sqlite3
 from qpos.view import refund, choosePayment
 from qpos import admin
 
-#order list model
-orderNo = 1
-orderedItems = []
-totalPrice = 0
-orderModel = QtGui.QStandardItemModel()
-orderModel.setHorizontalHeaderLabels(['No', 'Product Name', 'Qty', 'Amount'])
-
 class Checkout(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(Checkout, self).__init__(parent)
@@ -22,18 +15,23 @@ class Checkout(QtWidgets.QWidget):
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.updateTime)
         self.timer.start(1000)
+        self.orderNo = 1
+        self.orderedItems = []
+        self.totalPrice = 0
+        self.orderModel = QtGui.QStandardItemModel()
+        self.orderModel.setHorizontalHeaderLabels(['No', 'Product Name', 'Qty', 'Amount'])
         self.ui.sortByChickenBtn.clicked.connect(self.sortByChicken)
         self.ui.sortByDrinkBtn.clicked.connect(self.sortByDrink)
         self.ui.sortByOtherBtn.clicked.connect(self.sortByOther)
         self.ui.productList.doubleClicked.connect(self.addOrder)
         self.ui.resetBtn.clicked.connect(self.reset)
-        self.ui.orderList.setModel(orderModel)
+        self.ui.orderList.setModel(self.orderModel)
         self.ui.orderList.resizeColumnsToContents()
-        self.ui.totalPriceBox.setPlainText('{:,}'.format(totalPrice))
+        self.ui.totalPriceBox.setPlainText('{:,}'.format(self.totalPrice))
         self.ui.refundBtn.clicked.connect(self.refundBtnClicked)
         self.ui.payBtn.clicked.connect(self.pay)
         self.ui.admBtn.clicked.connect(self.openAdmin)
-
+        
     def showMessageBox(self,title,message):
         msgBox = QtWidgets.QMessageBox()
         msgBox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
@@ -99,19 +97,17 @@ class Checkout(QtWidgets.QWidget):
 
     @QtCore.pyqtSlot()
     def reset(self):
-        global orderNo, orderedItems, totalPrice
-        orderNo = 1
-        orderedItems = []
-        totalPrice = 0
-        orderModel.clear()
-        orderModel.setHorizontalHeaderLabels(['No', 'Product Name', 'Qty', 'Amount'])
-        self.orderList.setModel(orderModel)
-        self.totalPriceBox.setPlainText(str(totalPrice))
+        self.orderNo = 1
+        self.orderedItems = []
+        self.totalPrice = 0
+        self.orderModel.clear()
+        self.orderModel.setHorizontalHeaderLabels(['No', 'Product Name', 'Qty', 'Amount'])
+        self.orderList.setModel(self.orderModel)
+        self.totalPriceBox.setPlainText(str(self.totalPrice))
 
     @QtCore.pyqtSlot()
     def pay(self):
-        global totalPrice, orderedItems
-        if orderedItems == []:
+        if self.orderedItems == []:
             self.showMessageBox('Error','There are no item to pay for')
             #warning = QMessageBox()
             #warning.setIcon(QMessageBox.Warning)
@@ -122,9 +118,9 @@ class Checkout(QtWidgets.QWidget):
         else:
             self.close()
             choosePayment.ChoosePayment(self)
-            choosePayment.orderMain.totalPrice = totalPrice
-            choosePayment.orderMain.orderModel = orderModel
-            choosePayment.orderMain.orderedItems = orderedItems
+            #choosePayment.orderMain.totalPrice = self.totalPrice
+            #choosePayment.orderMain.orderModel = self.orderModel
+            #choosePayment.orderMain.orderedItems = self.orderedItems
 
     @QtCore.pyqtSlot()
     def updateTime(self):
@@ -136,7 +132,6 @@ class Checkout(QtWidgets.QWidget):
 
     @QtCore.pyqtSlot(QtCore.QModelIndex)
     def addOrder(self, index):
-        global orderNo, orderedItems, totalPrice
         productName = index.data()
         sql = "SELECT Price FROM Product WHERE Name='%s'" % productName
         try:
@@ -146,21 +141,21 @@ class Checkout(QtWidgets.QWidget):
                     data = cursor.fetchall()
 
             price = int(data[0][0])
-            if productName in orderedItems:
-                orderRow = int(orderedItems.index(productName))
-                orderQuantity = int(orderModel.index(orderRow, 2).data()) + 1
-                orderModel.setItem(orderRow, 2, QtGui.QStandardItem('{:,}'.format(orderQuantity)))
-                orderModel.setItem(orderRow, 3, QtGui.QStandardItem('{:,}'.format(orderQuantity * price)))
+            if productName in self.orderedItems:
+                orderRow = int(self.orderedItems.index(productName))
+                orderQuantity = int(self.orderModel.index(orderRow, 2).data()) + 1
+                self.orderModel.setItem(orderRow, 2, QtGui.QStandardItem('{:,}'.format(orderQuantity)))
+                self.orderModel.setItem(orderRow, 3, QtGui.QStandardItem('{:,}'.format(orderQuantity * price)))
             else:
-                orderedItems.append(productName)
-                row = [QtGui.QStandardItem('{:,}'.format(orderNo)), QtGui.QStandardItem(productName),
+                self.orderedItems.append(productName)
+                row = [QtGui.QStandardItem('{:,}'.format(self.orderNo)), QtGui.QStandardItem(productName),
                        QtGui.QStandardItem('1'), QtGui.QStandardItem('{:,}'.format(price))]
-                orderModel.appendRow(row)
-                orderNo += 1
-            totalPrice += price
+                self.orderModel.appendRow(row)
+                self.orderNo += 1
+            self.totalPrice += price
             self.ui.orderList.resizeColumnsToContents()
-            self.ui.totalPriceBox.setPlainText('{:,}'.format(totalPrice))
-            self.ui.orderList.setModel(orderModel)
+            self.ui.totalPriceBox.setPlainText('{:,}'.format(self.totalPrice))
+            self.ui.orderList.setModel(self.orderModel)
         except sqlite3.Error as e:
             print("An error occurred:", e.args[0])
 
