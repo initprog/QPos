@@ -6,7 +6,6 @@ from qpos.db import conn
 from qpos.view import choosePayment
 import datetime
 import sqlite3
-from qpos import user
 
 #Cash payment and delivery model
 cashReceived = ''
