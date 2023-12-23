@@ -4,8 +4,6 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from qpos.view import cashPayment
 from qpos import user
-from qpos.view.orderMain import *
-
 
 class Ui_Form(QObject):
     def setupUi(self, Form):

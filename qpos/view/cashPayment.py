@@ -3,13 +3,13 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from contextlib import closing
 from qpos.db import conn
-from qpos.view import orderMain, choosePayment
-from qpos.view.orderMain import *
+from qpos.view import choosePayment
+from qpos.checkout import totalPrice, orderNo, orderModel, orderedItems
 import datetime
 import sqlite3
 from qpos import user
 
-#Cash 결제 및 시재 모델
+#Cash payment and delivery model
 cashReceived = ''
 sql = "SELECT Total FROM Management WHERE ID = (SELECT MAX(ID) FROM Management)"
 try:
@@ -257,7 +257,7 @@ class CashPayment(QMainWindow, Ui_Form):
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.updateTime)
         self.timer.start(1000)
-        self.priceBox.setPlainText('{:,}'.format(orderMain.totalPrice))
+        self.priceBox.setPlainText('{:,}'.format(totalPrice))
         self.show()
 
     @pyqtSlot()
@@ -346,7 +346,7 @@ class CashPayment(QMainWindow, Ui_Form):
 
         if cashReceived == '':
             pass
-        elif orderMain.totalPrice > int(cashReceived):
+        elif totalPrice > int(cashReceived):
             currentCash += int(cashReceived)
             sql1 = "INSERT INTO Sale (NoSale, Date, Time, Price, Payment) VALUES (%s, '%s', '%s', %s, '%s')" %\
                    (NoSale, Date, Time, int(cashReceived), Payment)
@@ -365,29 +365,29 @@ class CashPayment(QMainWindow, Ui_Form):
                 warning.setText("문제가 발생하여 결제가 완료되지 않았습니다\n재시도 하십시오")
                 warning.setWindowTitle("오류")
                 warning.exec()
-            orderMain.totalPrice = orderMain.totalPrice - int(cashReceived)
+            totalPrice = totalPrice - int(cashReceived)
             cashReceived = ''
-            self.priceBox.setPlainText('{:,}'.format(orderMain.totalPrice))
+            self.priceBox.setPlainText('{:,}'.format(totalPrice))
             self.cashBox.setPlainText(cashReceived)
         else:
-            change = int(cashReceived) - orderMain.totalPrice
+            change = int(cashReceived) - totalPrice
             cashReceived = ''
-            currentCash = currentCash + orderMain.totalPrice - change
+            currentCash = currentCash + totalPrice - change
             self.changeBox.setPlainText('{:,}'.format(change))
             msgbox = QtWidgets.QMessageBox(self)
             msgbox.question(self, '결제 완료', '결제가 완료되었습니다', QtWidgets.QMessageBox.Ok)
 
             sql1 = "INSERT INTO Sale (NoSale, Date, Time, Price, Payment) VALUES (%s, '%s', '%s', %s, '%s')"%\
-                   (NoSale, Date, Time, orderMain.totalPrice, Payment)
+                   (NoSale, Date, Time, totalPrice, Payment)
             sql3 = "INSERT INTO MANAGEMENT (DateTime, Total) VALUES ('%s', %s)"%(DateTime, currentCash)
             try:
                 with closing(conn()) as connection:
                     with closing(connection.cursor()) as cursor:
                         cursor.execute(sql1)
-                        for i in orderMain.orderedItems:
+                        for i in orderedItems:
                             sql2 = "INSERT INTO DetailedSale (NoSale, Product, No, Price) VALUES (%s, '%s', %s, %s)" %\
-                                (NoSale, i, int(orderMain.orderModel.index(int(orderMain.orderedItems.index(i)), 2).data()),\
-                                    int(orderMain.orderModel.index(int(orderMain.orderedItems.index(i)), 3).data().replace(',','')))
+                                (NoSale, i, int(orderModel.index(int(orderedItems.index(i)), 2).data()),\
+                                    int(orderModel.index(int(orderedItems.index(i)), 3).data().replace(',','')))
                             cursor.execute(sql2)
                         cursor.execute(sql3)
                         conn.commit()
@@ -400,12 +400,11 @@ class CashPayment(QMainWindow, Ui_Form):
                 warning.setWindowTitle("오류")
                 warning.exec()
             self.close()
-            orderMain.orderNo = 1
-            orderMain.orderedItems = []
-            orderMain.totalPrice = 0
-            orderMain.orderModel = QtGui.QStandardItemModel()
-            orderMain.orderModel.setHorizontalHeaderLabels(['No', 'Product Name', 'Qty', 'Amount'])
-            self.order = orderMain.OrderMain(self)
+            orderNo = 1
+            orderedItems = []
+            totalPrice = 0
+            orderModel = QtGui.QStandardItemModel()
+            orderModel.setHorizontalHeaderLabels(['No', 'Product Name', 'Qty', 'Amount'])
 
 if __name__ == "__main__":
     import sys
