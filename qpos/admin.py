@@ -5,7 +5,6 @@ from contextlib import closing
 from qpos.db import conn
 from PyQt6.QtWidgets import *
 from PyQt6 import QtWidgets, QtCore, QtGui
-from qpos.view import accessAdmin
 from qpos.view import addProduct
 from qpos.view import cashAvailable
 from qpos.view import changePrice
