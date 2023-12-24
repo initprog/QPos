@@ -1,7 +1,9 @@
 # Simple POS(Point-Of-Sale) Program
 
-- A simple POS system written in Python with PyQt-based user interface and SQLite database.
-- Fork from [PyQt POS System](https://github.com/copolio/PyQt-POS-System)
+A simple POS system written in Python with PyQt-based user interface and SQLite database.  
+The application structure is adapted from the following:
+- POS [copolio](https://github.com/copolio/PyQt-POS-System)
+- Menu/navigation [ingwant](https://github.com/ingwant/PyQt5-Video-Book) app structure v2
 
 ## Development Environment
 - Python 3.12
