@@ -161,7 +161,7 @@ class Refund(QMainWindow, Ui_Form):
     def checkValidation(self, no):
         if no == '':
             warning = QMessageBox()
-            warning.setIcon(QMessageBox.Warning)
+            warning.setIcon(QMessageBox.Icon.Warning)
             warning.setText("결제 번호를 기재하십시오.")
             warning.setWindowTitle("오류")
             warning.exec()

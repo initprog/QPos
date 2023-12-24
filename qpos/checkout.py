@@ -102,8 +102,8 @@ class Checkout(QtWidgets.QWidget):
         self.totalPrice = 0
         self.orderModel.clear()
         self.orderModel.setHorizontalHeaderLabels(['No', 'Product Name', 'Qty', 'Amount'])
-        self.orderList.setModel(self.orderModel)
-        self.totalPriceBox.setPlainText(str(self.totalPrice))
+        self.ui.orderList.setModel(self.orderModel)
+        self.ui.totalPriceBox.setPlainText(str(self.totalPrice))
 
     @QtCore.pyqtSlot()
     def pay(self):
