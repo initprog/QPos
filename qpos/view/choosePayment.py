@@ -1,9 +1,7 @@
-import sqlite3
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from qpos.view import cashPayment
-from qpos import user
 
 class Ui_Form(QObject):
     def setupUi(self, Form):
@@ -140,7 +138,6 @@ class ChoosePayment(QDialog, Ui_Form):
     @pyqtSlot()
     def onGoBackBtnClicked(self):
         self.close()
-        #self.order = user.Order(self)
 
 if __name__ == "__main__":
     import sys
