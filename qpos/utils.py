@@ -21,6 +21,8 @@ def authenticate(userid, pwd):
         if row[1] == hash_password(pwd): return True
   return False
 
-def generate_nanoid():
-  return nanoid.generate('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 18)
+def generate_nanoid(size=18):
+  return nanoid.generate('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', size)
 
+if __name__ == '__main__':
+  print(generate_nanoid())
