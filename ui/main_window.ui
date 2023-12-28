@@ -129,8 +129,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>142</width>
-             <height>509</height>
+             <width>147</width>
+             <height>512</height>
             </rect>
            </property>
            <attribute name="icon">
@@ -266,8 +266,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>142</width>
-             <height>509</height>
+             <width>147</width>
+             <height>512</height>
             </rect>
            </property>
            <attribute name="icon">
@@ -397,8 +397,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>142</width>
-             <height>509</height>
+             <width>147</width>
+             <height>512</height>
             </rect>
            </property>
            <attribute name="icon">
@@ -425,7 +425,7 @@ border: none;</string>
              <number>5</number>
             </property>
             <item>
-             <widget class="QPushButton" name="pushButton_6">
+             <widget class="QPushButton" name="btnMerchant">
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -435,7 +435,7 @@ border: none;</string>
                <enum>Qt::NoFocus</enum>
               </property>
               <property name="text">
-               <string>YouTube</string>
+               <string>Merchant</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -443,7 +443,7 @@ border: none;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_7">
+             <widget class="QPushButton" name="btnLocation">
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -453,7 +453,52 @@ border: none;</string>
                <enum>Qt::NoFocus</enum>
               </property>
               <property name="text">
-               <string>Tumbr</string>
+               <string>Locations</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnTeam">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Teams</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnShift">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Shifts</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnWage">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Wages</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
