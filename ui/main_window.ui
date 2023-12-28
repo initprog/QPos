@@ -129,8 +129,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>147</width>
-             <height>512</height>
+             <width>142</width>
+             <height>509</height>
             </rect>
            </property>
            <attribute name="icon">
@@ -266,8 +266,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>147</width>
-             <height>512</height>
+             <width>142</width>
+             <height>509</height>
             </rect>
            </property>
            <attribute name="icon">
@@ -294,7 +294,7 @@ border: none;</string>
              <number>5</number>
             </property>
             <item>
-             <widget class="QPushButton" name="pushButton_3">
+             <widget class="QPushButton" name="btnOrder">
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -312,7 +312,7 @@ border: none;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_4">
+             <widget class="QPushButton" name="btnItem">
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -330,7 +330,7 @@ border: none;</string>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_5">
+             <widget class="QPushButton" name="btnInvoice">
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
@@ -363,6 +363,21 @@ border: none;</string>
              </widget>
             </item>
             <item>
+             <widget class="QPushButton" name="btnVendor">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Vendors</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer_2">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -382,8 +397,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>147</width>
-             <height>512</height>
+             <width>142</width>
+             <height>509</height>
             </rect>
            </property>
            <attribute name="icon">
