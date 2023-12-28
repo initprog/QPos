@@ -6,8 +6,6 @@ from qpos.view.main_window_ui import Ui_MainWindow
 from qpos.home import Home
 from qpos.dashboard import Dashboard
 from qpos.lexus import Lexus
-from qpos.mazda import Mazda
-from qpos.toyota import Toyota
 from qpos.tumbr import Tumbr
 from qpos.youtube import Youtube
 from qpos.checkout import Checkout
