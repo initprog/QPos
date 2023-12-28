@@ -6,8 +6,6 @@ from qpos.view.main_window_ui import Ui_MainWindow
 from qpos.home import Home
 from qpos.dashboard import Dashboard
 from qpos.lexus import Lexus
-from qpos.tumbr import Tumbr
-from qpos.youtube import Youtube
 from qpos.checkout import Checkout
 from qpos.item import Item
 
@@ -25,8 +23,6 @@ class MainApp(QMainWindow):
         ## =======================================================================================================
         self.home_btn = self.ui.pushButton
         self.dashboard_btn = self.ui.pushButton_2
-        self.youtube_btn = self.ui.pushButton_6
-        self.tumbr_btn = self.ui.pushButton_7
         self.checkout_btn = self.ui.btnCheckout
         # More submenus
         self.order_btn = self.ui.btnOrder
@@ -34,6 +30,12 @@ class MainApp(QMainWindow):
         self.invoice_btn = self.ui.btnInvoice
         self.customer_btn = self.ui.btnCustomer
         self.vendor_btn = self.ui.btnVendor
+        # Settings submenus
+        self.merchant_btn = self.ui.btnMerchant
+        self.location_btn = self.ui.btnLocation
+        self.team_btn = self.ui.btnTeam
+        self.shift_btn = self.ui.btnShift
+        self.wage_btn = self.ui.btnWage
 
         ## =======================================================================================================
         ## Create dict for menu buttons and tab windows
@@ -41,14 +43,17 @@ class MainApp(QMainWindow):
         self.menu_btns_list = {
             self.home_btn: Home(),
             self.dashboard_btn: Dashboard(),
-            self.youtube_btn: Youtube(),
-            self.tumbr_btn: Tumbr(),
             self.checkout_btn: Checkout(),
             self.order_btn: Lexus(),
             self.item_btn: Item(),
             self.invoice_btn: Lexus(),
             self.customer_btn: Lexus(),
             self.vendor_btn: Lexus(),
+            self.merchant_btn: Lexus(),
+            self.location_btn: Lexus(),
+            self.team_btn: Lexus(),
+            self.shift_btn: Lexus(),
+            self.wage_btn: Lexus(),
         }
 
         ## =======================================================================================================
@@ -63,8 +68,6 @@ class MainApp(QMainWindow):
 
         self.home_btn.clicked.connect(self.show_selected_window)
         self.dashboard_btn.clicked.connect(self.show_selected_window)
-        self.youtube_btn.clicked.connect(self.show_selected_window)
-        self.tumbr_btn.clicked.connect(self.show_selected_window)
         self.checkout_btn.clicked.connect(self.show_selected_window)
         self.order_btn.clicked.connect(self.show_selected_window)
         self.item_btn.clicked.connect(self.show_selected_window)
@@ -72,6 +75,11 @@ class MainApp(QMainWindow):
         self.customer_btn.clicked.connect(self.show_selected_window)
         self.vendor_btn.clicked.connect(self.show_selected_window)
         self.check_user()
+        self.merchant_btn.clicked.connect(self.show_selected_window)
+        self.location_btn.clicked.connect(self.show_selected_window)        
+        self.team_btn.clicked.connect(self.show_selected_window)
+        self.shift_btn.clicked.connect(self.show_selected_window)
+        self.wage_btn.clicked.connect(self.show_selected_window)
 
     def show_home_window(self):
         """

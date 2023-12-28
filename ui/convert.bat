@@ -8,6 +8,12 @@ set infolder=c:\dev\ws-py\QPos\ui
 set outfolder=c:\dev\ws-py\QPos\qpos\view
 set pyuicpath=c:\dev\qtdesigner\.venv\scripts
 
+IF "%DEVENV%" == "HOME" (
+  set infolder=e:\dev\ws-py\QPos\ui
+  set outfolder=e:\dev\ws-py\QPos\qpos\view
+  set pyuicpath=c:\dev\ws-py\design\.venv\scripts
+)
+
 rem input file required
 IF "%1"=="" (
   echo syntax: convert input-file
@@ -15,7 +21,7 @@ IF "%1"=="" (
 )
 
 rem if input file has no extension then append .ui into it
-IF "%~x1"=="" set infile=%1.ui
+IF "%~x1"=="" (set infile=%1.ui) ELSE (set infile=%1)
 
 set outfile=%~n1_ui.py
 rem -x parameter generate extra code to test and display the class
