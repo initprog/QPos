@@ -5,6 +5,7 @@
 import os, sqlite3, logging
 from sqlite3 import Error
 from contextlib import closing
+from PyQt6.QtSql import QSqlDatabase
 
 DEFAULT_DB = os.path.join(os.path.dirname(__file__), f"data{os.sep}pos.sqlite")
 
@@ -132,4 +133,16 @@ def test_ctx():
         for t in rows:
             print(t)
 
-#test_ctx()
+class Qdb():
+    '''
+    Singleton for QSqlDatabase connection for SQLite
+    '''
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            print('Creating  qdb')
+            cls._instance = QSqlDatabase("QSQLITE")
+            cls._instance.setDatabaseName(DEFAULT_DB)
+            cls._instance.open()
+        return cls._instance
