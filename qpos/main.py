@@ -6,6 +6,7 @@ from qpos.view.main_window_ui import Ui_MainWindow
 from qpos.home import Home
 from qpos.dashboard import Dashboard
 from qpos.lexus import Lexus
+from qpos.more import More
 from qpos.checkout import Checkout
 from qpos.item import Item
 
@@ -36,6 +37,8 @@ class MainApp(QMainWindow):
         self.team_btn = self.ui.btnTeam
         self.shift_btn = self.ui.btnShift
         self.wage_btn = self.ui.btnWage
+        self.option_btn = self.ui.btnOptions
+        self.more_btn = self.ui.btnMore
 
         ## =======================================================================================================
         ## Create dict for menu buttons and tab windows
@@ -54,6 +57,8 @@ class MainApp(QMainWindow):
             self.team_btn: Lexus(),
             self.shift_btn: Lexus(),
             self.wage_btn: Lexus(),
+            self.option_btn: Lexus(),
+            self.more_btn: More(),
         }
 
         ## =======================================================================================================
@@ -80,6 +85,8 @@ class MainApp(QMainWindow):
         self.team_btn.clicked.connect(self.show_selected_window)
         self.shift_btn.clicked.connect(self.show_selected_window)
         self.wage_btn.clicked.connect(self.show_selected_window)
+        self.option_btn.clicked.connect(self.show_selected_window)
+        self.more_btn.clicked.connect(self.show_selected_window)
 
     def show_home_window(self):
         """
