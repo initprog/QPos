@@ -79,7 +79,7 @@ class MainApp(QMainWindow):
         self.invoice_btn.clicked.connect(self.show_selected_window)
         self.customer_btn.clicked.connect(self.show_selected_window)
         self.vendor_btn.clicked.connect(self.show_selected_window)
-        self.check_user()
+        #self.check_user()
         self.merchant_btn.clicked.connect(self.show_selected_window)
         self.location_btn.clicked.connect(self.show_selected_window)        
         self.team_btn.clicked.connect(self.show_selected_window)
