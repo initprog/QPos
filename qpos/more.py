@@ -66,3 +66,4 @@ class More(QWidget):
             self.ui.tabWidget.setCurrentIndex(curIndex)
             self.ui.tabWidget.setVisible(True)
         '''
+        self.more_btns_list[button].show()
