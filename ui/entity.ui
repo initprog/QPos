@@ -40,7 +40,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pgList">
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -189,7 +189,13 @@
           </size>
          </property>
          <property name="text">
-          <string>icon</string>
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../qpos/asset/resource.qrc">:/icon/icon/folder-128.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -269,6 +275,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../qpos/asset/resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

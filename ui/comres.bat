@@ -9,6 +9,12 @@ set infolder=c:\dev\ws-py\QPos\qpos\asset
 set outfolder=%infolder%
 set rccpath=C:\dev\qtdesigner\.venv\Lib\site-packages\qt6_applications\Qt\bin
 
+IF "%DEVENV%" == "HOME" (
+  set infolder=e:\dev\ws-py\QPos\qpos\asset
+  set outfolder=e:\dev\ws-py\QPos\qpos\asset
+  set rccpath=C:\dev\ws-py\design\.venv\Lib\site-packages\qt6_applications\Qt\bin
+)
+
 rem input file required
 IF "%1"=="" (
   echo syntax: comres input-file[.qrc]
@@ -16,7 +22,7 @@ IF "%1"=="" (
 )
 
 rem if input file has no extension then append .qrc into it
-IF "%~x1"=="" set infile=%1.qrc
+IF "%~x1"=="" (set infile=%1.qrc) ELSE (set infile=%1)
 
 set outfile=%~n1_rc.py
 
