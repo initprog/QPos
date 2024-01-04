@@ -48,33 +48,38 @@ class QPushButton2(QtWidgets.QPushButton):
   
 
 class PushButton(QtWidgets.QPushButton):
+  """
+  Create a push button with two icons on the left and right of the text.
+  Parameters:
+    (str): Button text
+    iconLeft (str): path to icon file for the left icon
+    iconRight (str): path to icon file for the right icon
+    iconSize (QSize): size of the icons
+  """
   def __init__(self, *args, **kwargs):
+    isize = kwargs['iconSize']
+    pixLeft = QtGui.QPixmap(kwargs['iconLeft']).scaled(isize)
+    pixRight = QtGui.QPixmap(kwargs['iconRight']).scaled(isize)
+    kwargs.pop('iconLeft')
+    kwargs.pop('iconRight')
     super(PushButton, self).__init__(*args, **kwargs)
-    #self.setStyleSheet('''background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #fdfbf7, stop: 1 #6190F2);
-    #    border-style: solid;border-width: 2px;
-    #    border-radius: 8px;
-    #    border-color: #9BB7F0;padding: 3px;''')
 
-    icon = self.icon()
-    icon_size = self.iconSize()
-    # remove icon
-    self.setIcon(QtGui.QIcon())
+    label_left = QtWidgets.QLabel()
+    label_left.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
+    label_left.setAttribute(QtCore.Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+    label_left.setPixmap(pixLeft)
 
-    icon2 = QtWidgets.QApplication.style().standardIcon(QtWidgets.QStyle.StandardPixmap.SP_ArrowLeft)
-    label_icon = QtWidgets.QLabel()
-    label_icon.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
-    label_icon.setAttribute(QtCore.Qt.WidgetAttribute.WA_TransparentForMouseEvents)
-
-    label_icon_left = QtWidgets.QLabel()
-    label_icon_left.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
-    label_icon_left.setAttribute(QtCore.Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+    label_right = QtWidgets.QLabel()
+    label_right.setAttribute(QtCore.Qt.WidgetAttribute.WA_TranslucentBackground)
+    label_right.setAttribute(QtCore.Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+    label_right.setPixmap(pixRight)
 
     lay = QtWidgets.QHBoxLayout(self)
     lay.setContentsMargins(0, 0, 0, 0)
-    lay.addWidget(label_icon_left, alignment=QtCore.Qt.AlignmentFlag.AlignLeft)
-    lay.addWidget(label_icon, alignment=QtCore.Qt.AlignmentFlag.AlignRight)
-    label_icon.setPixmap(icon.pixmap(icon_size))
-    label_icon_left.setPixmap(icon2.pixmap(icon_size))
+    lay.addWidget(label_left, alignment=QtCore.Qt.AlignmentFlag.AlignLeft)
+    lay.addWidget(label_right, alignment=QtCore.Qt.AlignmentFlag.AlignRight)
+    
+    
 
 class TestUI(QtWidgets.QWidget):
   def __init__(self, parent=None):
@@ -90,7 +95,8 @@ class TestUI(QtWidgets.QWidget):
       iconx = QtWidgets.QApplication.style().standardIcon(QtWidgets.QStyle.StandardPixmap.SP_ArrowRight)
 
       self.pb = QPushButton2('test', self)
-      pbo = PushButton('Test Button', icon=iconx, iconSize=QtCore.QSize(16,16))
+      #pbo = PushButton('Test Button', icon=iconx, iconSize=QtCore.QSize(16,16))
+      pbo = PushButton('Test button', iconLeft=icon1, iconRight=icon2, iconSize=QtCore.QSize(16,16))
       #pb2 = QPushButton2('Reporting and Tools', self)
       #pb3 = QPushButton2('Customer', self)
       
