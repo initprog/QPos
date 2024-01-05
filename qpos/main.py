@@ -1,3 +1,4 @@
+from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QApplication, QMainWindow
 
 from qpos import app, login
@@ -87,6 +88,15 @@ class MainApp(QMainWindow):
         self.wage_btn.clicked.connect(self.show_selected_window)
         self.option_btn.clicked.connect(self.show_selected_window)
         self.more_btn.clicked.connect(self.show_selected_window)
+
+        vendor_sub = QtWidgets.QMenu()
+        vendor_sub.addAction('Vendors', self.doVendor)
+        vendor_sub.addAction('Account Payable')
+        vendor_sub.addAction('Purchase Order')
+        self.vendor_btn.setMenu(vendor_sub)
+
+    def doVendor(self):
+        print('vendor crud')
 
     def show_home_window(self):
         """
