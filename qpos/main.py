@@ -23,23 +23,25 @@ class MainApp(QMainWindow):
         ## =======================================================================================================
         ## Get all the objects in windows
         ## =======================================================================================================
-        self.home_btn = self.ui.pushButton
-        self.dashboard_btn = self.ui.pushButton_2
+        self.home_btn = self.ui.btnHome
+        self.dashboard_btn = self.ui.btnDashboard
         self.checkout_btn = self.ui.btnCheckout
-        # More submenus
+        self.customer_btn = self.ui.btnCustomer
+        self.transaction_btn = self.ui.btnTransaction
+        # Logistic submenus
         self.order_btn = self.ui.btnOrder
         self.item_btn = self.ui.btnItem
         self.invoice_btn = self.ui.btnInvoice
-        self.customer_btn = self.ui.btnCustomer
+        self.report_btn = self.ui.btnReport
         self.vendor_btn = self.ui.btnVendor
-        # Settings submenus
+        self.billpay_btn = self.ui.btnBillpay
+        # Business submenus
         self.merchant_btn = self.ui.btnMerchant
         self.location_btn = self.ui.btnLocation
         self.team_btn = self.ui.btnTeam
         self.shift_btn = self.ui.btnShift
-        self.wage_btn = self.ui.btnWage
-        self.option_btn = self.ui.btnOptions
-        self.more_btn = self.ui.btnMore
+        self.payroll_btn = self.ui.btnPayroll
+        self.bank_btn = self.ui.btnBank
 
         ## =======================================================================================================
         ## Create dict for menu buttons and tab windows
@@ -48,18 +50,22 @@ class MainApp(QMainWindow):
             self.home_btn: Home(),
             self.dashboard_btn: Dashboard(),
             self.checkout_btn: Checkout(),
+            self.customer_btn: Lexus(),
+            self.transaction_btn: Lexus(),
+
             self.order_btn: Lexus(),
             self.item_btn: Item(),
             self.invoice_btn: Lexus(),
-            self.customer_btn: Lexus(),
+            self.report_btn: Lexus(),
             self.vendor_btn: Lexus(),
+            self.billpay_btn: Lexus(),
+
             self.merchant_btn: Lexus(),
             self.location_btn: Lexus(),
             self.team_btn: Lexus(),
             self.shift_btn: Lexus(),
-            self.wage_btn: Lexus(),
-            self.option_btn: Lexus(),
-            self.more_btn: More(),
+            self.payroll_btn: Lexus(),
+            self.bank_btn: Lexus(),
         }
 
         ## =======================================================================================================
@@ -71,23 +77,27 @@ class MainApp(QMainWindow):
         ## Connect signal and slot
         ## =======================================================================================================
         self.ui.tabWidget.tabCloseRequested.connect(self.close_tab)
-
+        # General
         self.home_btn.clicked.connect(self.show_selected_window)
         self.dashboard_btn.clicked.connect(self.show_selected_window)
         self.checkout_btn.clicked.connect(self.show_selected_window)
-        self.order_btn.clicked.connect(self.show_selected_window)
+        self.customer_btn.clicked.connect(self.show_selected_window)
+        self.transaction_btn.clicked.connect(self.show_selected_window)
+        # Logistic
+        self.order_btn.clicked.connect(self.switchMenu)
         self.item_btn.clicked.connect(self.show_selected_window)
         self.invoice_btn.clicked.connect(self.show_selected_window)
-        self.customer_btn.clicked.connect(self.show_selected_window)
+        self.report_btn.clicked.connect(self.show_selected_window)
         self.vendor_btn.clicked.connect(self.show_selected_window)
+        self.billpay_btn.clicked.connect(self.show_selected_window)
+        # Business
         #self.check_user()
         self.merchant_btn.clicked.connect(self.show_selected_window)
         self.location_btn.clicked.connect(self.show_selected_window)        
         self.team_btn.clicked.connect(self.show_selected_window)
         self.shift_btn.clicked.connect(self.show_selected_window)
-        self.wage_btn.clicked.connect(self.show_selected_window)
-        self.option_btn.clicked.connect(self.show_selected_window)
-        self.more_btn.clicked.connect(self.show_selected_window)
+        self.payroll_btn.clicked.connect(self.show_selected_window)
+        self.bank_btn.clicked.connect(self.show_selected_window)
 
         vendor_sub = QtWidgets.QMenu()
         vendor_sub.addAction('Vendors', self.doVendor)
@@ -95,9 +105,14 @@ class MainApp(QMainWindow):
         vendor_sub.addAction('Purchase Order')
         self.vendor_btn.setMenu(vendor_sub)
 
+        self.ui.btnItem2Home.clicked.connect(lambda: self.ui.stacked_menu.setCurrentIndex(0))
+
     def doVendor(self):
         print('vendor crud')
 
+    def switchMenu(self):
+        self.ui.stacked_menu.setCurrentIndex(1)
+        
     def show_home_window(self):
         """
         Function for showing home window
