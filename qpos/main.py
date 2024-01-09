@@ -1,3 +1,4 @@
+import os
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QApplication, QMainWindow
 
@@ -10,6 +11,7 @@ from qpos.lexus import Lexus
 from qpos.more import More
 from qpos.checkout import Checkout
 from qpos.item import Item
+from qpos.category import ItemCategory
 
 
 class MainApp(QMainWindow):
@@ -43,6 +45,17 @@ class MainApp(QMainWindow):
         self.payroll_btn = self.ui.btnPayroll
         self.bank_btn = self.ui.btnBank
 
+        # Items
+        self.item_lib_btn = self.ui.btnItemLib
+        self.inv_mgt_btn = self.ui.btnInventoryMgt
+        self.serv_lib_btn = self.ui.btnServiceLib
+        self.modifier_btn = self.ui.btnModifier
+        self.category_btn = self.ui.btnCategory
+        self.discount_btn = self.ui.btnDiscount
+        self.unit_btn = self.ui.btnUnit
+        self.item_setting_btn = self.ui.btnItemSetting
+        self.item_to_home_btn = self.ui.btnItem2Home
+
         ## =======================================================================================================
         ## Create dict for menu buttons and tab windows
         ## =======================================================================================================
@@ -54,7 +67,7 @@ class MainApp(QMainWindow):
             self.transaction_btn: Lexus(),
 
             self.order_btn: Lexus(),
-            self.item_btn: Item(),
+            self.item_btn: Lexus(),
             self.invoice_btn: Lexus(),
             self.report_btn: Lexus(),
             self.vendor_btn: Lexus(),
@@ -66,6 +79,16 @@ class MainApp(QMainWindow):
             self.shift_btn: Lexus(),
             self.payroll_btn: Lexus(),
             self.bank_btn: Lexus(),
+
+            self.item_lib_btn: Item(),
+            self.inv_mgt_btn: Lexus(),
+            self.serv_lib_btn: Lexus(),
+            self.modifier_btn: Lexus(),
+            self.category_btn: ItemCategory(),
+            self.discount_btn: Lexus(),
+            self.unit_btn: Lexus(),
+            self.item_setting_btn: Lexus(),
+            self.item_to_home_btn: Lexus(),
         }
 
         ## =======================================================================================================
@@ -84,8 +107,8 @@ class MainApp(QMainWindow):
         self.customer_btn.clicked.connect(self.show_selected_window)
         self.transaction_btn.clicked.connect(self.show_selected_window)
         # Logistic
-        self.order_btn.clicked.connect(self.switchMenu)
-        self.item_btn.clicked.connect(self.show_selected_window)
+        self.order_btn.clicked.connect(self.show_selected_window)
+        self.item_btn.clicked.connect(self.switchMenu)
         self.invoice_btn.clicked.connect(self.show_selected_window)
         self.report_btn.clicked.connect(self.show_selected_window)
         self.vendor_btn.clicked.connect(self.show_selected_window)
@@ -99,13 +122,22 @@ class MainApp(QMainWindow):
         self.payroll_btn.clicked.connect(self.show_selected_window)
         self.bank_btn.clicked.connect(self.show_selected_window)
 
+        # Items
+        self.item_lib_btn.clicked.connect(self.show_selected_window)
+        self.inv_mgt_btn.clicked.connect(self.show_selected_window)
+        self.serv_lib_btn.clicked.connect(self.show_selected_window)
+        self.modifier_btn.clicked.connect(self.show_selected_window)
+        self.category_btn.clicked.connect(self.show_selected_window)
+        self.discount_btn.clicked.connect(self.show_selected_window)
+        self.unit_btn.clicked.connect(self.show_selected_window)
+        self.item_setting_btn.clicked.connect(self.show_selected_window)
+        self.item_to_home_btn.clicked.connect(lambda: self.ui.stacked_menu.setCurrentIndex(0))
+
         vendor_sub = QtWidgets.QMenu()
         vendor_sub.addAction('Vendors', self.doVendor)
         vendor_sub.addAction('Account Payable')
         vendor_sub.addAction('Purchase Order')
         self.vendor_btn.setMenu(vendor_sub)
-
-        self.ui.btnItem2Home.clicked.connect(lambda: self.ui.stacked_menu.setCurrentIndex(0))
 
     def doVendor(self):
         print('vendor crud')
@@ -180,7 +212,7 @@ class MainApp(QMainWindow):
         """
         Set the status of selected button checked and set other buttons' status unchecked
         :param btn: button object
-        :return:
+        :return: None
         """
         for button in self.menu_btns_list.keys():
             if button != btn:

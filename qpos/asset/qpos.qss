@@ -1,0 +1,8 @@
+QPushButton {
+  border: 1px solid #8f8f91;
+  border-radius: 4px;
+}
+QPushButton::menu-indicator {
+  subcontrol-origin: padding;
+  subcontrol-position: right center;
+}

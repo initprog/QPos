@@ -8,6 +8,10 @@ QPOS_APPID = 'nagwos.commerce.pos'
 
 def run():
     app = QApplication(sys.argv)
+    with open(os.path.join(os.path.dirname(__file__), f"asset{os.sep}qpos.qss")) as qss:
+        css = qss.read()
+    #app.setStyleSheet(css)
+
     # Show app's icon on Windows 11 taskbar
     if platform.system() == 'Windows' and platform.release() == '11':
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(QPOS_APPID)

@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'c:\dev\ws-py\QPos\ui\item.ui'
+# Form implementation generated from reading ui file 'e:\dev\ws-py\QPos\ui\item.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -42,6 +42,7 @@ class Ui_Form(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.btnAddItem = QtWidgets.QPushButton(parent=Form)
+        self.btnAddItem.setMinimumSize(QtCore.QSize(100, 0))
         self.btnAddItem.setObjectName("btnAddItem")
         self.horizontalLayout_2.addWidget(self.btnAddItem)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
