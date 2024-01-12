@@ -1,4 +1,4 @@
-import os
+from PyQt6 import QtGui
 from PyQt6.QtWidgets import QWidget
 from PyQt6.QtSql import QSqlQuery, QSqlTableModel, QSqlRelation, QSqlRelationalTableModel, QSqlRelationalDelegate
 from qpos.db import Qdb
@@ -20,6 +20,7 @@ class Item(QWidget):
                 ' Download our template to create and update items with import.'
             self.ui.lblDescription.setText(txt)
             self.ui.btnCreate.setText('Create an item')
+            self.ui.lblIcon.setPixmap(QtGui.QPixmap(":/icon/icon/items-128.png"))
             return
 
         self.ui = Item_Form()
