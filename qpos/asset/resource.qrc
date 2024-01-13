@@ -20,5 +20,6 @@
     <file>icon/more-48w.png</file>
     <file>icon/settings-32.png</file>
     <file>icon/settings-48.png</file>
+    <file>icon/unit-128.png</file>
   </qresource>
 </RCC>

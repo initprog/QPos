@@ -19,7 +19,7 @@ class Unit(QWidget):
             txt = 'Units are used to specify how you want to measure your items.'
             self.ui.lblDescription.setText(txt)
             self.ui.btnCreate.setText('Create a unit')
-            self.ui.lblIcon.setPixmap(QtGui.QPixmap(":/icon/icon/items-128.png"))
+            self.ui.lblIcon.setPixmap(QtGui.QPixmap(":/icon/icon/unit-128.png"))
             return
 
         self.ui.lblHeader.setText('Your Units')
@@ -29,5 +29,6 @@ class Unit(QWidget):
         self.model = QSqlRelationalTableModel(db=self.db)
         self.model.setTable("Unit")
         self.ui.tvTable.setModel(self.model)
-
+        
         self.model.select()
+        self.ui.tvTable.resizeColumnsToContents() # not working?
