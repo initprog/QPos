@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'e:\dev\ws-py\QPos\ui\entity.ui'
+# Form implementation generated from reading ui file 'c:\dev\ws-py\QPos\ui\entity.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -68,8 +68,9 @@ class Ui_Form(object):
         self.horizontalLayout_2.addWidget(self.search)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         self.tvTable = QtWidgets.QTableView(parent=self.pgList)
-        self.tvTable.setFrameShape(QtWidgets.QFrame.Shape.Panel)
+        self.tvTable.setFrameShape(QtWidgets.QFrame.Shape.Box)
         self.tvTable.setFrameShadow(QtWidgets.QFrame.Shadow.Plain)
+        self.tvTable.setLineWidth(1)
         self.tvTable.setObjectName("tvTable")
         self.verticalLayout.addWidget(self.tvTable)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -77,9 +78,6 @@ class Ui_Form(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.verticalLayout_5.addLayout(self.verticalLayout)
         self.stackedWidget.addWidget(self.pgList)
-        self.pgDetail = QtWidgets.QWidget()
-        self.pgDetail.setObjectName("pgDetail")
-        self.stackedWidget.addWidget(self.pgDetail)
         self.pgNoRecord = QtWidgets.QWidget()
         self.pgNoRecord.setObjectName("pgNoRecord")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.pgNoRecord)
@@ -124,7 +122,7 @@ class Ui_Form(object):
         self.verticalLayout_2.addWidget(self.stackedWidget)
 
         self.retranslateUi(Form)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):

@@ -11,6 +11,7 @@ from qpos.more import More
 from qpos.checkout import Checkout
 from qpos.item import Item
 from qpos.category import ItemCategory
+from qpos.unit import Unit
 
 
 class MainApp(QMainWindow):
@@ -85,7 +86,7 @@ class MainApp(QMainWindow):
             self.modifier_btn: Lexus(),
             self.category_btn: ItemCategory(),
             self.discount_btn: Lexus(),
-            self.unit_btn: Lexus(),
+            self.unit_btn: Unit(),
             self.item_setting_btn: Lexus(),
             self.item_to_home_btn: Lexus(),
         }
