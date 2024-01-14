@@ -1,5 +1,5 @@
-from PyQt6 import QtGui
-from PyQt6.QtWidgets import QWidget
+from PyQt6 import QtGui, QtCore
+from PyQt6.QtWidgets import QWidget, QHeaderView
 from PyQt6.QtSql import QSqlQuery, QSqlTableModel, QSqlRelation, QSqlRelationalTableModel, QSqlRelationalDelegate
 from qpos.db import Qdb
 from qpos.view.unit_ui import Ui_Form as Unit_Form
@@ -28,7 +28,10 @@ class Unit(QWidget):
         
         self.model = QSqlRelationalTableModel(db=self.db)
         self.model.setTable("Unit")
+        self.model.setHeaderData(0, QtCore.Qt.Orientation.Horizontal, QtCore.QTranslator.tr('ID'))
+        self.model.setHeaderData(1, QtCore.Qt.Orientation.Horizontal, QtCore.QTranslator.tr('Name'))
         self.ui.tvTable.setModel(self.model)
-        
+        self.ui.tvTable.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
+        self.ui.tvTable.horizontalHeader().setStretchLastSection(True)
         self.model.select()
-        self.ui.tvTable.resizeColumnsToContents() # not working?
+        
