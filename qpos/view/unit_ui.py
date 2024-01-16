@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'c:\dev\ws-py\QPos\ui\unit.ui'
+# Form implementation generated from reading ui file 'e:\dev\ws-py\QPos\ui\unit.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -43,6 +43,9 @@ class Ui_Form(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Minimum)
         self.horizontalLayout.addItem(spacerItem2)
+        self.btnDelete = QtWidgets.QPushButton(parent=Form)
+        self.btnDelete.setObjectName("btnDelete")
+        self.horizontalLayout.addWidget(self.btnDelete)
         self.btnSave = QtWidgets.QPushButton(parent=Form)
         self.btnSave.setObjectName("btnSave")
         self.horizontalLayout.addWidget(self.btnSave)
@@ -56,6 +59,7 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Unit"))
         self.lblHeader.setText(_translate("Form", "Add a Unit"))
         self.lblName.setText(_translate("Form", "Name"))
+        self.btnDelete.setText(_translate("Form", "Delete"))
         self.btnSave.setText(_translate("Form", "Save"))
 
 

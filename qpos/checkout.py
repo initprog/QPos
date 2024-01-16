@@ -1,5 +1,6 @@
 from PyQt6 import QtGui, QtCore, QtWidgets
-from qpos.view.orderMain import Ui_Form
+#from qpos.view.orderMain import Ui_Form
+from qpos.view.order_main_ui import Ui_Form
 from contextlib import closing
 from qpos.db import conn
 import sqlite3
