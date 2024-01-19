@@ -12,42 +12,7 @@ from qpos.view import changePrice
 from qpos.view import chooseProductManagement
 from qpos.view import dateStat
 from qpos.view import deleteProduct
-from qpos.view import accessAdmin
 from qpos.view import orderMain
-
-
-class AdminAuth(accessAdmin.Ui_Form):
-    def __init__(self):
-        self.Form = QtWidgets.QWidget()
-        self.setupUi(self.Form)
-        self.Form.show()
-        self.initUI()
-
-    def showMessageBox(self,title,message):
-        msgBox = QtGui.QMessageBox()
-        msgBox.setIcon(QtGui.QMessageBox.Warning)
-        msgBox.setWindowTitle(title)
-        msgBox.setText(message)
-        msgBox.setStandardButtons(QtGui.QMessageBox.Ok)
-        msgBox.exec_()
-
-    def initUI(self):
-        # connect button to function
-        self.isPassword.clicked.connect(self.checkPassword)
-
-    def checkPassword(self):
-        if self.passwordInput.text() == '1234':
-            self.openSaleStat()
-        elif self.passwordInput.text() == '':
-            self.showMessageBox('Error', 'Please enter password')
-        else:
-            self.showMessageBox('Error', 'Password is incorrect')
-
-    # make new window of SaleStat
-    def openSaleStat(self):
-        self.Form = QtWidgets.QMainWindow()
-        self.ds = SaleStat()
-
 
 
 class SaleStat(dateStat.Ui_Form):
@@ -63,9 +28,11 @@ class SaleStat(dateStat.Ui_Form):
         self.whichflag = 'date'
 
     def openCashAvailable(self):
-        self.ca = AdminCash()
+        self.ca = CashManagement()
+
     def openProductManagement(self):
         self.pm = ProductManagement()
+
     def goBack(self):
         self.Form.close()
         self.us = orderMain.OrderMain()
@@ -76,6 +43,7 @@ class SaleStat(dateStat.Ui_Form):
         min = str(current.time().minute())
         sec = str(current.time().second())
         self.timeBox.setPlainText(hour + ":" + min + ":" + sec)
+        
     def showMessageBox(self,title,message):
         msgBox = QtGui.QMessageBox()
         msgBox.setIcon(QtGui.QMessageBox.Warning)
@@ -283,7 +251,7 @@ class SaleStat(dateStat.Ui_Form):
             self.whichflag = 'date'
             self.productStatBtn.setText("Statistic by item")
 
-class AdminCash(cashAvailable.Ui_Form):
+class CashManagement(cashAvailable.Ui_Form):
     def __init__(self):
         self.Form = QtWidgets.QWidget()
         self.setupUi(self.Form)
