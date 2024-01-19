@@ -162,8 +162,8 @@ class Refund(QMainWindow, Ui_Form):
         if no == '':
             warning = QMessageBox()
             warning.setIcon(QMessageBox.Icon.Warning)
-            warning.setText("결제 번호를 기재하십시오.")
-            warning.setWindowTitle("오류")
+            warning.setText("Please enter a Payment Number")
+            warning.setWindowTitle("Error")
             warning.exec()
             return False
         no = int(no)
@@ -176,15 +176,15 @@ class Refund(QMainWindow, Ui_Form):
 
             if data == []:
                 warning = QMessageBox()
-                warning.setIcon(QMessageBox.Warning)
-                warning.setText("결제 내역이 없습니다.")
-                warning.setWindowTitle("오류")
+                warning.setIcon(QMessageBox.Icon.Warning)
+                warning.setText("Sale record not found.")
+                warning.setWindowTitle("Error")
                 warning.exec()
                 return False
             else:
                 return data
-        except Error as e:
-            print(e)
+        except:
+            print('Error')
 
     def searchByCardNo(self):
         pass
@@ -204,14 +204,14 @@ class Refund(QMainWindow, Ui_Form):
             with closing(conn()) as connection:
                 with closing(connection.cursor()) as cursor:
                     cursor.execute(sql)
-                    conn.commit()
+                    connection.commit()
 
         except sqlite3.Error as e:
             print(e)
             warning = QMessageBox()
-            warning.setIcon(QMessageBox.Warning)
-            warning.setText("문제가 발생하여 환불이 완료되지 않았습니다\n재시도 하십시오")
-            warning.setWindowTitle("오류")
+            warning.setIcon(QMessageBox.Icon.Warning)
+            warning.setText("A problem occurred and the refund was not completed\nPlease retry.")
+            warning.setWindowTitle("Error")
             warning.exec()
         self.PayNoBox.clear()
         self.resultListBox.clear()
@@ -227,7 +227,7 @@ class Refund(QMainWindow, Ui_Form):
                     dateTime = datetime.datetime.now()
                     cursor.execute("UPDATE Management SET Total='%d' WHERE ID=1" %total)
                     cursor.execute("UPDATE Management SET DateTime='%s' WHERE ID=1" % dateTime)
-                    conn.commit()
+                    connection.commit()
         except sqlite3.Error as e:
             print(e)
 
