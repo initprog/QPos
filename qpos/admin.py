@@ -6,7 +6,8 @@ from qpos.db import conn
 from PyQt6.QtWidgets import *
 from PyQt6 import QtWidgets, QtCore, QtGui
 from qpos.view import addProduct
-from qpos.view import cashAvailable
+#from qpos.view import cashAvailable
+from qpos.view import cash_value_kr_ui as cashAvailable
 from qpos.view import changePrice
 from qpos.view import chooseProductManagement
 from qpos.view import dateStat
