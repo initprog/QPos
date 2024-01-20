@@ -10,6 +10,8 @@ class Ui_Form(object):
         Form.resize(1500, 900)
         Form.setMinimumSize(QtCore.QSize(1500, 900))
         Form.setMaximumSize(QtCore.QSize(1500, 900))
+
+        # row 3 col 1
         self.scrollArea = QtWidgets.QScrollArea(Form)
         self.scrollArea.setGeometry(QtCore.QRect(10, 240, 901, 651))
         self.scrollArea.setWidgetResizable(True)
@@ -20,6 +22,7 @@ class Ui_Form(object):
         self.layoutWidget_3 = QtWidgets.QWidget(self.scrollAreaWidgetContents)
         self.layoutWidget_3.setGeometry(QtCore.QRect(10, 0, 806, 102))
         self.layoutWidget_3.setObjectName("layoutWidget_3")
+        # buttons----------------------
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.layoutWidget_3)
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
@@ -35,6 +38,7 @@ class Ui_Form(object):
         self.graphBtn.setStyleSheet("font: 75 16pt \"Sego UI\";")
         self.graphBtn.setObjectName("graphBtn")
         self.horizontalLayout_7.addWidget(self.graphBtn)
+
         self.viewLayout = QtWidgets.QWidget(self.scrollAreaWidgetContents)
         self.verticalLayout_1 = QtWidgets.QVBoxLayout(self.viewLayout)
         self.viewLayout.setGeometry(QtCore.QRect(10, 110, 881, 531))
@@ -58,6 +62,8 @@ class Ui_Form(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
+
+        # row 3 col 2
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.salesTotalLabel = QtWidgets.QLabel(self.layoutWidget)
@@ -117,6 +123,8 @@ class Ui_Form(object):
         self.wonLabel2.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.wonLabel2.setObjectName("wonLabel2")
         self.verticalLayout_2.addWidget(self.splitter_3)
+
+        # row 1
         self.layoutWidget2 = QtWidgets.QWidget(Form)
         self.layoutWidget2.setGeometry(QtCore.QRect(10, 10, 1472, 102))
         self.layoutWidget2.setObjectName("layoutWidget2")
@@ -186,6 +194,8 @@ class Ui_Form(object):
         self.goBackBtn.setStyleSheet("font: 75 16pt \"Sego UI\";")
         self.goBackBtn.setObjectName("goBackBtn")
         self.horizontalLayout.addWidget(self.goBackBtn)
+
+        # row 2
         self.layoutWidget_2 = QtWidgets.QWidget(Form)
         self.layoutWidget_2.setGeometry(QtCore.QRect(10, 120, 1312, 104))
         self.layoutWidget_2.setObjectName("layoutWidget_2")
