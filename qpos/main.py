@@ -12,7 +12,7 @@ from qpos.checkout import Checkout
 from qpos.item import Item
 from qpos.category import ItemCategory
 from qpos.unit import Unit
-
+from qpos.lib import toast, time
 
 class MainApp(QMainWindow):
     def __init__(self):
@@ -138,6 +138,9 @@ class MainApp(QMainWindow):
         vendor_sub.addAction('Account Payable')
         vendor_sub.addAction('Purchase Order')
         self.vendor_btn.setMenu(vendor_sub)
+
+        self.toast = toast.Toast(text=f"{time.dayGreeting()}!", duration=3, mtype=toast.Mtype.PRIMARY, parent=self)
+        self.toast.show()
 
     def doVendor(self):
         print('vendor crud')
